@@ -1,0 +1,30 @@
+.admin-page-title { font-family: 'Oswald', sans-serif; font-size: 2rem; color: #F5A623; text-transform: uppercase; margin-bottom: 0; }
+
+.admin-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+:host ::ng-deep .admin-table {
+  .p-datatable-thead th {
+    background: #111 !important;
+    color: #F5A623 !important;
+    font-family: 'Oswald', sans-serif !important;
+    text-transform: uppercase;
+    border-color: #2a2a2a !important;
+  }
+  .p-datatable-tbody td {
+    background: #111 !important;
+    color: #fff !important;
+    border-color: #2a2a2a !important;
+  }
+  .p-datatable-tbody tr:hover td { background: #1e1e1e !important; }
+}
+
+.action-btns { display: flex; gap: 0.5rem; }
+
+.dialog-form { display: flex; flex-direction: column; gap: 0; }
+.field { margin-bottom: 1rem; label { display: block; color: #ccc; font-size: 0.875rem; margin-bottom: 0.4rem; } }
+.w-full { width: 100%; }
