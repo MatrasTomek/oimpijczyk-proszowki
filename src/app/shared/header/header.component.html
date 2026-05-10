@@ -1,0 +1,42 @@
+<header class="site-header" [class.scrolled]="scrolled()">
+  <div class="container header-inner">
+
+    <!-- Logo -->
+    <a routerLink="/" class="logo-link">
+      <img src="assets/logo.jpg" alt="Olimpijczyk Proszówki" class="logo-img" />
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="desktop-nav" aria-label="Nawigacja główna">
+      <a
+        *ngFor="let item of navItems"
+        [routerLink]="item.path"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+        class="nav-link"
+      >{{ item.label }}</a>
+    </nav>
+
+    <!-- Hamburger -->
+    <button class="hamburger" (click)="menuOpen.set(true)" aria-label="Otwórz menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Drawer -->
+<p-drawer [(visible)]="menuOpen" position="right" [style]="{ width: '280px', background: '#111' }">
+  <ng-template pTemplate="header">
+    <img src="assets/logo.jpg" alt="Logo" style="height:48px" />
+  </ng-template>
+  <nav class="mobile-nav">
+    <a
+      *ngFor="let item of navItems"
+      [routerLink]="item.path"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+      class="mobile-nav-link"
+      (click)="closeMenu()"
+    >{{ item.label }}</a>
+  </nav>
+</p-drawer>

@@ -1,0 +1,56 @@
+<footer class="site-footer">
+  <div class="container footer-grid">
+
+    <!-- Logo & opis -->
+    <div class="footer-brand">
+      <img src="assets/logo.jpg" alt="Olimpijczyk Proszówki" class="footer-logo" />
+      <p class="footer-desc">
+        Stowarzyszenie Olimpijczyk Proszówki — klub pływacki z licencjonowanymi zawodnikami.
+        Kształtujemy mistrzów od najmłodszych lat.
+      </p>
+      <div class="social-links">
+        <a href="#" target="_blank" rel="noopener" aria-label="Facebook" class="social-link">
+          <i class="pi pi-facebook"></i>
+        </a>
+        <a href="#" target="_blank" rel="noopener" aria-label="Instagram" class="social-link">
+          <i class="pi pi-instagram"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Nawigacja -->
+    <div class="footer-nav">
+      <h4 class="footer-heading">Nawigacja</h4>
+      <ul>
+        <li *ngFor="let link of navLinks">
+          <a [routerLink]="link.path" class="footer-link">{{ link.label }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Kontakt -->
+    <div class="footer-contact">
+      <h4 class="footer-heading">Kontakt</h4>
+      <ul>
+        <li>
+          <i class="pi pi-envelope"></i>
+          <a href="mailto:kontakt@olimpijczyk-proszowki.pl" class="footer-link">kontakt@olimpijczyk-proszowki.pl</a>
+        </li>
+        <li>
+          <i class="pi pi-phone"></i>
+          <a href="tel:+48000000000" class="footer-link">+48 000 000 000</a>
+        </li>
+      </ul>
+      <div class="legal-info">
+        <p>KRS: 0000000000</p>
+        <p>NIP: 000-000-00-00</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; {{ year }} Stowarzyszenie Olimpijczyk Proszówki. Wszelkie prawa zastrzeżone.</p>
+    </div>
+  </div>
+</footer>
