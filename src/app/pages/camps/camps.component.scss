@@ -1,0 +1,114 @@
+@use '../page-hero';
+
+.camps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 600px) { grid-template-columns: 1fr; }
+}
+
+.camp-card { padding: 0; }
+
+.camp-image-placeholder {
+  background: var(--color-surface-light);
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.camp-body { padding: 1.75rem; }
+
+.camp-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.camp-name {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--color-primary);
+}
+
+.camp-meta {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  margin-bottom: 1rem;
+
+  span { display: flex; align-items: center; gap: 0.35rem; }
+  i { color: var(--color-primary); }
+}
+
+.camp-desc {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.camp-spots {
+  &.full { color: #ef4444; font-size: 0.9rem; display: flex; align-items: center; gap: 0.4rem; }
+}
+
+.spots-bar {
+  background: var(--color-surface-light);
+  border-radius: 4px;
+  height: 6px;
+  margin-bottom: 0.4rem;
+}
+
+.spots-fill {
+  background: var(--color-primary);
+  height: 100%;
+  border-radius: 4px;
+}
+
+.spots-text {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  strong { color: var(--color-primary); }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--color-text-muted);
+  i { font-size: 3rem; color: var(--color-border); display: block; margin-bottom: 1rem; }
+}
+
+.past-camps-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.past-camp-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+
+  @media (max-width: 600px) { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+}
+
+.past-camp-name {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--color-text);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.past-camp-meta {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  i { color: var(--color-primary); }
+}

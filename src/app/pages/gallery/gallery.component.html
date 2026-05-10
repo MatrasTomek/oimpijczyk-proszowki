@@ -1,0 +1,45 @@
+<div class="page-hero">
+  <div class="container">
+    <h1 class="page-title">Galeria</h1>
+    <p class="page-breadcrumb">Start / Galeria</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Zdjęcia</h2>
+    <p class="section-subtitle">Wspomnienia z zawodów, treningów i obozów</p>
+
+    <!-- Filtry kategorii -->
+    <div class="category-filters">
+      <button
+        *ngFor="let cat of categories"
+        class="filter-btn"
+        [class.active]="selectedCategory === cat"
+        (click)="selectedCategory = cat"
+      >{{ cat }}</button>
+    </div>
+
+    <!-- Grid zdjęć -->
+    <div class="gallery-grid">
+      <div
+        class="gallery-item"
+        *ngFor="let item of filteredItems; let i = index"
+        (click)="openLightbox(i)"
+      >
+        <div class="gallery-placeholder">
+          <i class="pi pi-image"></i>
+        </div>
+        <div class="gallery-overlay">
+          <p class="gallery-title">{{ item.title }}</p>
+          <p-tag [value]="item.category" severity="warn" />
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="filteredItems.length === 0">
+      <i class="pi pi-images"></i>
+      <p>Brak zdjęć w tej kategorii</p>
+    </div>
+  </div>
+</section>
