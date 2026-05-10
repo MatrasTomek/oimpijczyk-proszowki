@@ -1,0 +1,27 @@
+@use '../page-hero';
+
+:host ::ng-deep .results-table {
+  .p-datatable-thead th {
+    background: var(--color-surface) !important;
+    color: var(--color-primary) !important;
+    font-family: var(--font-heading) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.85rem;
+    border-color: var(--color-border) !important;
+  }
+
+  .p-datatable-tbody td {
+    background: var(--color-surface) !important;
+    color: var(--color-text) !important;
+    border-color: var(--color-border) !important;
+  }
+
+  .p-datatable-tbody tr:hover td {
+    background: var(--color-surface-light) !important;
+  }
+}
+
+.athlete-name { font-weight: 600; color: #fff !important; }
+.comp-name { font-size: 0.85rem; color: var(--color-text-muted) !important; }
+.result-time { font-family: var(--font-heading); font-size: 1.1rem; color: var(--color-primary) !important; }

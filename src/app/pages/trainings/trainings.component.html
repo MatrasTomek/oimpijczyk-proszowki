@@ -1,0 +1,41 @@
+<div class="page-hero">
+  <div class="container">
+    <h1 class="page-title">Treningi</h1>
+    <p class="page-breadcrumb">Start / Treningi</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Harmonogram treningów</h2>
+    <p class="section-subtitle">Wybierz grupę odpowiednią do swojego wieku i poziomu</p>
+
+    <div class="groups-grid">
+      <div class="group-card card-dark" *ngFor="let group of groups">
+        <div class="group-header">
+          <div>
+            <h3 class="group-name">{{ group.name }}</h3>
+            <span class="group-age">{{ group.ageRange }}</span>
+          </div>
+          <p-tag [value]="group.level" [severity]="levelSeverity(group.level)" />
+        </div>
+        <div class="schedule-table">
+          <div class="schedule-row" *ngFor="let s of group.schedule">
+            <span class="schedule-day">{{ s.day }}</span>
+            <span class="schedule-time"><i class="pi pi-clock"></i> {{ s.time }}</span>
+            <span class="schedule-pool"><i class="pi pi-map-marker"></i> {{ s.pool }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <i class="pi pi-info-circle"></i>
+      <div>
+        <strong>Informacje o zapisach</strong>
+        <p>Aby zapisać dziecko do grupy, skontaktuj się z trenerem lub biurem klubu.
+        Wymagane jest aktualne orzeczenie lekarskie oraz licencja PZP.</p>
+      </div>
+    </div>
+  </div>
+</section>
