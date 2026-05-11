@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm start *)",
+      "PowerShell(Get-Content *)",
+      "PowerShell(npm install *)",
+      "Bash(NODE_OPTIONS=\"--use-system-ca\" npm start)",
+      "PowerShell($content = Get-Content \"C:\\\\Users\\\\matra\\\\HTML\\\\olimpijczykProszowki\\\\frontend\\\\node_modules\\\\primeng\\\\package.json\" -Raw | ConvertFrom-Json; $content.exports.'./inputtext')",
+      "PowerShell(Select-String -Path \"C:\\\\Users\\\\matra\\\\HTML\\\\olimpijczykProszowki\\\\frontend\\\\node_modules\\\\primeng\\\\package.json\" -Pattern \"inputtext\" -Context 0,3 | Select-Object -First 1 | ForEach-Object { $_.Line; $_.Context.PostContext })",
+      "PowerShell(Test-Path *)",
+      "PowerShell(Get-Process *)"
+    ]
+  }
+}
