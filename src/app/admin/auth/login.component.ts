@@ -6,6 +6,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-login',
@@ -68,9 +69,9 @@ export class LoginComponent {
   loading = signal(false);
   error = signal<string | null>(null);
 
-  constructor(private router: Router) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
-  async login() {
+  login(): void {
     if (!this.username || !this.password) {
       this.error.set('Wprowadź login i hasło');
       return;
@@ -78,14 +79,13 @@ export class LoginComponent {
     this.loading.set(true);
     this.error.set(null);
 
-    // TODO: replace with real API call
-    await new Promise(r => setTimeout(r, 800));
-    if (this.username === 'admin' && this.password === 'admin123') {
-      localStorage.setItem('admin_token', 'demo-token');
-      this.router.navigate(['/admin/dashboard']);
-    } else {
-      this.error.set('Nieprawidłowy login lub hasło');
-    }
-    this.loading.set(false);
+    this.auth.login(this.username, this.password).subscribe({
+      next: () => this.router.navigate(['/admin/dashboard']),
+      error: (err) => {
+        const msg = err?.error?.error ?? 'Błąd połączenia z serwerem';
+        this.error.set(msg);
+        this.loading.set(false);
+      }
+    });
   }
 }

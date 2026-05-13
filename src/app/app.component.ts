@@ -1,18 +1,23 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, signal } from '@angular/core';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, FooterComponent],
   template: `
-    <app-header />
-    <main class="main-content">
+    @if (!isAdminRoute()) {
+      <app-header />
+    }
+    <main [class]="isAdminRoute() ? '' : 'main-content'">
       <router-outlet />
     </main>
-    <app-footer />
+    @if (!isAdminRoute()) {
+      <app-footer />
+    }
   `,
   styles: [`
     :host {
@@ -26,4 +31,14 @@ import { FooterComponent } from './shared/footer/footer.component';
     }
   `]
 })
-export class AppComponent {}
+export class AppComponent {
+  isAdminRoute = signal(false);
+
+  constructor(private router: Router) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.isAdminRoute.set(event.urlAfterRedirects.startsWith('/admin'));
+    });
+  }
+}
