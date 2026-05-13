@@ -24,11 +24,13 @@
   </div>
 </header>
 
-<!-- Mobile Drawer -->
-<p-drawer [(visible)]="menuOpen" position="right" [style]="{ width: '280px', background: '#111' }">
-  <ng-template pTemplate="header">
-    <img src="assets/logo.jpg" alt="Logo" style="height:48px" />
-  </ng-template>
+<!-- Mobile Drawer Overlay -->
+<div class="mobile-overlay" [class.open]="menuOpen()" (click)="closeMenu()"></div>
+<aside class="mobile-drawer" [class.open]="menuOpen()" aria-label="Menu mobilne">
+  <div class="drawer-header">
+    <img src="assets/logo.jpg" alt="Logo" class="drawer-logo" />
+    <button class="drawer-close" (click)="closeMenu()" aria-label="Zamknij menu">&#x2715;</button>
+  </div>
   <nav class="mobile-nav">
     <a
       *ngFor="let item of navItems"
@@ -39,4 +41,4 @@
       (click)="closeMenu()"
     >{{ item.label }}</a>
   </nav>
-</p-drawer>
+</aside>
