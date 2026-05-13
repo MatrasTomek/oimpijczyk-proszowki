@@ -12,9 +12,15 @@ interface NavItem {
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, ButtonModule, DrawerModule],
+  imports: [
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
+    ButtonModule,
+    DrawerModule,
+  ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   menuOpen = signal(false);

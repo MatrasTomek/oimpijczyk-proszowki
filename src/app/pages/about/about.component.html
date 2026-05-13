@@ -9,42 +9,73 @@
   <div class="container">
     <div class="about-grid">
       <div>
-        <h2 class="section-title" style="text-align:left">Historia klubu</h2>
+        <h2 class="section-title" style="text-align: left">Historia klubu</h2>
         <p>
-          Stowarzyszenie Olimpijczyk Proszówki zostało założone ponad 15 lat temu z inicjatywy grupy
-          pasjonatów pływania. Od początku naszym celem było stworzenie miejsca, w którym dzieci
-          i młodzież mogą rozwijać swoje sportowe talenty pod okiem doświadczonych trenerów.
+          Stowarzyszenie Olimpijczyk Proszówki zostało założone ponad 15 lat
+          temu z inicjatywy grupy pasjonatów pływania. Od początku naszym celem
+          było stworzenie miejsca, w którym dzieci i młodzież mogą rozwijać
+          swoje sportowe talenty pod okiem doświadczonych trenerów.
         </p>
         <p>
-          Przez lata działalności wychowaliśmy wielu zawodników, którzy osiągnęli sukcesy na
-          szczeblu regionalnym, krajowym, a nawet międzynarodowym. Nasz klub jest zrzeszony w
-          Polskim Związku Pływackim i posiada licencje na szkolenie zawodnicze.
+          Przez lata działalności wychowaliśmy wielu zawodników, którzy
+          osiągnęli sukcesy na szczeblu regionalnym, krajowym, a nawet
+          międzynarodowym. Nasz klub jest zrzeszony w Polskim Związku Pływackim
+          i posiada licencje na szkolenie zawodnicze.
         </p>
-        <h2 class="section-title" style="text-align:left; margin-top:2.5rem">Misja i wartości</h2>
+        <h2 class="section-title" style="text-align: left; margin-top: 2.5rem">
+          Misja i wartości
+        </h2>
         <ul class="values-list">
-          <li><i class="pi pi-check-circle"></i> Wszechstronny rozwój sportowy i osobisty</li>
-          <li><i class="pi pi-check-circle"></i> Praca zespołowa i wzajemny szacunek</li>
-          <li><i class="pi pi-check-circle"></i> Systematyczność i wytrwałość w dążeniu do celu</li>
-          <li><i class="pi pi-check-circle"></i> Uczciwa rywalizacja i fair play</li>
-          <li><i class="pi pi-check-circle"></i> Pasja do sportu i ciągłe doskonalenie</li>
+          <li>
+            <i class="pi pi-check-circle"></i> Wszechstronny rozwój sportowy i
+            osobisty
+          </li>
+          <li>
+            <i class="pi pi-check-circle"></i> Praca zespołowa i wzajemny
+            szacunek
+          </li>
+          <li>
+            <i class="pi pi-check-circle"></i> Systematyczność i wytrwałość w
+            dążeniu do celu
+          </li>
+          <li>
+            <i class="pi pi-check-circle"></i> Uczciwa rywalizacja i fair play
+          </li>
+          <li>
+            <i class="pi pi-check-circle"></i> Pasja do sportu i ciągłe
+            doskonalenie
+          </li>
         </ul>
       </div>
       <div class="photo-placeholder">
-        <i class="pi pi-image" style="font-size:3rem; color:var(--color-primary)"></i>
-        <p style="color:var(--color-text-muted); margin-top:1rem">Zdjęcie klubu</p>
+        <img
+          src="assets/all_2.jpg"
+          alt="Zdjęcie klubu"
+          style="
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+          "
+        />
       </div>
     </div>
 
-    <h2 class="section-title" style="margin-top:4rem">Kadra trenerska</h2>
+    <h2 class="section-title" style="margin-top: 4rem">Kadra trenerska</h2>
     <p class="section-subtitle">Doświadczeni i licencjonowani trenerzy</p>
     <div class="coaches-grid">
       <div class="coach-card card-dark" *ngFor="let coach of coaches">
         <div class="coach-avatar">
-          <i class="pi pi-user" style="font-size:2.5rem; color:var(--color-primary)"></i>
+          <i
+            class="pi pi-user"
+            style="font-size: 2.5rem; color: var(--color-primary)"
+          ></i>
         </div>
         <h3 class="coach-name">{{ coach.name }}</h3>
         <p class="coach-role">{{ coach.role }}</p>
-        <p class="coach-license"><i class="pi pi-verified"></i> {{ coach.license }}</p>
+        <p class="coach-license">
+          <i class="pi pi-verified"></i> {{ coach.license }}
+        </p>
       </div>
     </div>
   </div>
