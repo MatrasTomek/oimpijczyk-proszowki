@@ -3,20 +3,34 @@
   <div class="hero-overlay"></div>
   <div class="container hero-content">
     <img src="assets/logo.jpg" alt="Olimpijczyk Proszówki" class="hero-logo" />
-    <h1 class="hero-title">Stowarzyszenie<br><span>Olimpijczyk Proszówki</span></h1>
-    <p class="hero-subtitle">Klub pływacki z licencjonowanymi zawodnikami</p>
+    <h1 class="hero-title">
+      Stowarzyszenie<br /><span>Olimpijczyk Proszówki</span>
+    </h1>
+    <p class="hero-subtitle">
+      Licencjonowani zawodnicy na arenach całej Polski
+    </p>
     <div class="hero-actions">
-      <a routerLink="/treningi" pButton label="Nasze treningi" class="p-button"></a>
-      <a routerLink="/o-nas" pButton label="Poznaj nas" class="p-button p-button-outlined"></a>
+      <a
+        routerLink="/treningi"
+        pButton
+        label="Nasze treningi"
+        class="p-button"
+      ></a>
+      <a
+        routerLink="/o-nas"
+        pButton
+        label="Poznaj nas"
+        class="p-button p-button-outlined"
+      ></a>
     </div>
   </div>
   <picture class="hero-photo">
-    <source media="(max-width: 768px)" srcset="assets/start_small.jpg">
-    <img src="assets/start_big.jpg" alt="Olimpijczyk Proszówki">
+    <source media="(max-width: 768px)" srcset="assets/start_small.jpg" />
+    <img src="assets/start_big.jpg" alt="Olimpijczyk Proszówki" />
   </picture>
   <div class="hero-wave">
     <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#000000"/>
+      <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#000000" />
     </svg>
   </div>
 </section>
@@ -31,20 +45,64 @@
   </div>
 </section>
 
+<!-- ─── Obecność ─── -->
+<section class="section presence-section">
+  <div class="container">
+    <h2 class="section-title">Gdzie nas można spotkać</h2>
+    <p class="section-subtitle">
+      Aktywni przez cały rok — na zawodach, obozach i wydarzeniach w całej
+      Polsce
+    </p>
+    <div class="presence-grid">
+      <div class="presence-card" *ngFor="let item of presenceItems">
+        <div
+          class="presence-card-image"
+          [class.no-image]="!item.image"
+          [style.backgroundImage]="bgImage(item.image)"
+        >
+          <div class="presence-card-overlay"></div>
+          <span class="presence-icon" *ngIf="!item.image">
+            <i [class]="'pi ' + item.icon"></i>
+          </span>
+        </div>
+        <div class="presence-card-body">
+          <div class="presence-metric">
+            <span class="metric-value">{{ item.metric }}</span>
+            <span class="metric-label">{{ item.metricLabel }}</span>
+          </div>
+          <h3 class="presence-title">{{ item.title }}</h3>
+          <p class="presence-description">{{ item.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ─── Aktualności ─── -->
 <section class="section news-section">
   <div class="container">
     <h2 class="section-title">Aktualności</h2>
     <p class="section-subtitle">Najnowsze informacje z życia klubu</p>
+    <div class="news-tabs">
+      <a routerLink="/wyniki" class="news-tab">Wyniki</a>
+      <a routerLink="/obozy" class="news-tab">Obozy</a>
+      <a routerLink="/treningi" class="news-tab">Treningi</a>
+    </div>
     <div class="news-grid">
-      <article class="card-dark news-card" *ngFor="let item of latestNews">
+      <a
+        class="card-dark news-card"
+        *ngFor="let item of latestNews"
+        [routerLink]="categoryRoute(item.category)"
+      >
         <div class="news-card-body">
           <p-tag [value]="item.category" severity="warn" class="news-tag" />
           <h3 class="news-title">{{ item.title }}</h3>
           <p class="news-excerpt">{{ item.excerpt }}</p>
-          <span class="news-date">{{ item.date | date:'d MMMM yyyy':'':'pl' }}</span>
+          <span class="news-date">{{
+            item.date | date: "d MMMM yyyy" : "" : "pl"
+          }}</span>
         </div>
-      </article>
+      </a>
     </div>
   </div>
 </section>
@@ -53,22 +111,39 @@
 <section class="section about-section">
   <div class="container about-inner">
     <div class="about-text">
-      <h2 class="section-title" style="text-align:left">O naszym klubie</h2>
+      <h2 class="section-title" style="text-align: left">O naszym klubie</h2>
       <p>
-        Stowarzyszenie Olimpijczyk Proszówki to prężnie działający klub pływacki, który od ponad 15 lat
-        kształtuje sportowe talenty i wychowuje licencjonowanych zawodników. Naszym celem jest
-        wszechstronny rozwój sportowy dzieci i młodzieży.
+        Stowarzyszenie Olimpijczyk Proszówki to prężnie działający klub
+        pływacki, który od ponad 5 lat kształtuje sportowe talenty i wychowuje
+        licencjonowanych zawodników. Startujemy w zawodach na terenie całej
+        Polski, reprezentując nasze barwy na dziesiątkach imprez każdego roku.
       </p>
       <p>
-        Posiadamy wykwalifikowaną kadrę trenerską, nowoczesną infrastrukturę i systematyczny program
-        szkolenia, który pozwala naszym zawodnikom osiągać sukcesy na szczeblu regionalnym i krajowym.
+        Posiadamy wykwalifikowaną kadrę trenerską i systematyczny program
+        szkolenia — nasi zawodnicy regularnie stają na podium Mistrzostw
+        Małopolski i zawodów rangi krajowej, budując rozpoznawalność klubu w
+        całym środowisku pływackim.
       </p>
-      <a routerLink="/o-nas" pButton label="Dowiedz się więcej" class="p-button" style="margin-top:1.5rem"></a>
+      <a
+        routerLink="/o-nas"
+        pButton
+        label="Dowiedz się więcej"
+        class="p-button"
+        style="margin-top: 1.5rem"
+      ></a>
     </div>
     <div class="about-visual">
       <div class="visual-placeholder">
-        <i class="pi pi-flag" style="font-size:4rem; color:var(--color-primary)"></i>
-        <p style="color:var(--color-text-muted); margin-top:1rem">Zdjęcie klubu</p>
+        <img
+          src="assets/all-start.jpeg"
+          alt="Zdjęcie klubu"
+          style="
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+          "
+        />
       </div>
     </div>
   </div>
@@ -84,11 +159,23 @@
         <h3 class="camp-name">{{ nextCamp.name }}</h3>
         <div class="camp-details">
           <span><i class="pi pi-map-marker"></i> {{ nextCamp.location }}</span>
-          <span><i class="pi pi-calendar"></i> {{ nextCamp.dateFrom | date:'d MMM':'':'pl' }} – {{ nextCamp.dateTo | date:'d MMM yyyy':'':'pl' }}</span>
-          <span class="spots"><i class="pi pi-users"></i> Wolnych miejsc: <strong>{{ nextCamp.spotsLeft }}</strong></span>
+          <span
+            ><i class="pi pi-calendar"></i>
+            {{ nextCamp.dateFrom | date: "d MMM" : "" : "pl" }} –
+            {{ nextCamp.dateTo | date: "d MMM yyyy" : "" : "pl" }}</span
+          >
+          <span class="spots"
+            ><i class="pi pi-users"></i> Wolnych miejsc:
+            <strong>{{ nextCamp.spotsLeft }}</strong></span
+          >
         </div>
       </div>
-      <a routerLink="/obozy" pButton label="Dowiedz się więcej" class="p-button"></a>
+      <a
+        routerLink="/obozy"
+        pButton
+        label="Dowiedz się więcej"
+        class="p-button"
+      ></a>
     </div>
   </div>
 </section>
