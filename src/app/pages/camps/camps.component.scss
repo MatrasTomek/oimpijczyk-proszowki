@@ -1,4 +1,4 @@
-@use '../page-hero';
+@use "../page-hero";
 
 .camps-grid {
   display: grid;
@@ -6,10 +6,14 @@
   gap: 1.5rem;
   margin-bottom: 1.5rem;
 
-  @media (max-width: 600px) { grid-template-columns: 1fr; }
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
 }
 
-.camp-card { padding: 0; }
+.camp-card {
+  padding: 0;
+}
 
 .camp-image-placeholder {
   background: var(--color-surface-light);
@@ -20,7 +24,9 @@
   border-bottom: 1px solid var(--color-border);
 }
 
-.camp-body { padding: 1.75rem; }
+.camp-body {
+  padding: 1.75rem;
+}
 
 .camp-top {
   display: flex;
@@ -44,8 +50,14 @@
   font-size: 0.88rem;
   margin-bottom: 1rem;
 
-  span { display: flex; align-items: center; gap: 0.35rem; }
-  i { color: var(--color-primary); }
+  span {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  i {
+    color: var(--color-primary);
+  }
 }
 
 .camp-desc {
@@ -56,7 +68,13 @@
 }
 
 .camp-spots {
-  &.full { color: #ef4444; font-size: 0.9rem; display: flex; align-items: center; gap: 0.4rem; }
+  &.full {
+    color: #ef4444;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
 }
 
 .spots-bar {
@@ -75,17 +93,53 @@
 .spots-text {
   color: var(--color-text-muted);
   font-size: 0.85rem;
-  strong { color: var(--color-primary); }
+  strong {
+    color: var(--color-primary);
+  }
 }
 
 .empty-state {
   text-align: center;
   padding: 4rem 1rem;
   color: var(--color-text-muted);
-  i { font-size: 3rem; color: var(--color-border); display: block; margin-bottom: 1rem; }
+  i {
+    font-size: 3rem;
+    color: var(--color-border);
+    display: block;
+    margin-bottom: 1rem;
+  }
 }
 
-.past-camps-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.past-camp-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+
+  .camp-image-placeholder {
+    width: 200px;
+    height: 120px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--color-surface-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+.past-camps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
 
 .past-camp-item {
   display: flex;
@@ -96,7 +150,11 @@
   border: 1px solid var(--color-border);
   border-radius: 8px;
 
-  @media (max-width: 600px) { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
 }
 
 .past-camp-name {
@@ -110,5 +168,7 @@
 .past-camp-meta {
   color: var(--color-text-muted);
   font-size: 0.8rem;
-  i { color: var(--color-primary); }
+  i {
+    color: var(--color-primary);
+  }
 }

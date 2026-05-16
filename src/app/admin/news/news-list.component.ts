@@ -22,15 +22,39 @@ interface NewsItem {
 @Component({
   selector: 'app-news-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, TableModule, ButtonModule, DialogModule, InputTextModule, TextareaModule, ConfirmDialogModule, ToastModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    TableModule,
+    ButtonModule,
+    DialogModule,
+    InputTextModule,
+    TextareaModule,
+    ConfirmDialogModule,
+    ToastModule,
+  ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './news-list.component.html',
-  styleUrl: './news-list.component.scss'
+  styleUrl: './news-list.component.scss',
 })
 export class NewsListComponent {
   items = signal<NewsItem[]>([
-    { id: 1, title: 'Sukces na Mistrzostwach Małopolski', excerpt: 'Nasi zawodnicy zdobyli 5 złotych medali...', content: '', date: '2025-04-20', category: 'Wyniki' },
-    { id: 2, title: 'Letni Obóz Szkoleniowy 2025', excerpt: 'Zapisy na letni obóz szkoleniowy już otwarte!', content: '', date: '2025-04-10', category: 'Obozy' },
+    {
+      id: 1,
+      title: 'Sukces na Mistrzostwach Małopolski',
+      excerpt: 'Nasi zawodnicy zdobyli 5 złotych medali...',
+      content: '',
+      date: '2025-04-20',
+      category: 'Wyniki',
+    },
+    {
+      id: 2,
+      title: 'Letni Obóz Szkoleniowy 2026',
+      excerpt: 'Zobacz jak i gdzie robimy formę!',
+      content: '',
+      date: '2026-08-30',
+      category: 'Obozy',
+    },
   ]);
 
   dialogVisible = false;
@@ -38,7 +62,13 @@ export class NewsListComponent {
   isNew = false;
 
   openNew() {
-    this.editItem = { title: '', excerpt: '', content: '', category: '', date: new Date().toISOString().split('T')[0] };
+    this.editItem = {
+      title: '',
+      excerpt: '',
+      content: '',
+      category: '',
+      date: new Date().toISOString().split('T')[0],
+    };
     this.isNew = true;
     this.dialogVisible = true;
   }
@@ -52,14 +82,20 @@ export class NewsListComponent {
   save() {
     if (this.isNew) {
       const newItem = { ...this.editItem, id: Date.now() } as NewsItem;
-      this.items.update(list => [...list, newItem]);
+      this.items.update((list) => [...list, newItem]);
     } else {
-      this.items.update(list => list.map(i => i.id === this.editItem.id ? { ...i, ...this.editItem } as NewsItem : i));
+      this.items.update((list) =>
+        list.map((i) =>
+          i.id === this.editItem.id
+            ? ({ ...i, ...this.editItem } as NewsItem)
+            : i,
+        ),
+      );
     }
     this.dialogVisible = false;
   }
 
   delete(id: number) {
-    this.items.update(list => list.filter(i => i.id !== id));
+    this.items.update((list) => list.filter((i) => i.id !== id));
   }
 }

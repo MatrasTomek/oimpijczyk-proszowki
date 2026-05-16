@@ -7,34 +7,27 @@
 
 <section class="section">
   <div class="container">
-
     <h2 class="section-title">Nadchodzące obozy</h2>
-    <p class="section-subtitle">Zapisz się już teraz!</p>
 
     <div class="camps-grid" *ngIf="upcomingCamps.length; else noCamps">
       <div class="camp-card card-dark" *ngFor="let camp of upcomingCamps">
-        <div class="camp-image-placeholder">
-          <i class="pi pi-map" style="font-size:3rem; color:var(--color-primary)"></i>
-        </div>
         <div class="camp-body">
           <div class="camp-top">
             <h3 class="camp-name">{{ camp.name }}</h3>
-            <p-tag [value]="statusLabel(camp.status)" [severity]="statusSeverity(camp.status)" />
+            <p-tag
+              [value]="statusLabel(camp.status)"
+              [severity]="statusSeverity(camp.status)"
+            />
           </div>
           <div class="camp-meta">
             <span><i class="pi pi-map-marker"></i> {{ camp.location }}</span>
-            <span><i class="pi pi-calendar"></i> {{ camp.dateFrom | date:'d MMM':'':'pl' }} – {{ camp.dateTo | date:'d MMM yyyy':'':'pl' }}</span>
+            <span
+              ><i class="pi pi-calendar"></i>
+              {{ camp.dateFrom | date: "d MMM" : "" : "pl" }} –
+              {{ camp.dateTo | date: "d MMM yyyy" : "" : "pl" }}</span
+            >
           </div>
           <p class="camp-desc">{{ camp.description }}</p>
-          <div class="camp-spots" *ngIf="camp.spotsLeft > 0">
-            <div class="spots-bar">
-              <div class="spots-fill" [style.width.%]="((camp.spotsTotal - camp.spotsLeft) / camp.spotsTotal) * 100"></div>
-            </div>
-            <span class="spots-text">Wolnych miejsc: <strong>{{ camp.spotsLeft }}</strong> / {{ camp.spotsTotal }}</span>
-          </div>
-          <div class="camp-spots full" *ngIf="camp.spotsLeft === 0">
-            <span><i class="pi pi-times-circle"></i> Brak wolnych miejsc</span>
-          </div>
         </div>
       </div>
     </div>
@@ -46,21 +39,26 @@
       </div>
     </ng-template>
 
-    <h2 class="section-title" style="margin-top:4rem">Archiwum obozów</h2>
-    <p class="section-subtitle">Historia naszych wyjazdów</p>
+    <h2 class="section-title" style="margin-top: 4rem">Archiwum obozów</h2>
+    <p class="section-subtitle">Historia naszych wyjazdów w 2026r.</p>
 
     <div class="past-camps-list">
       <div class="past-camp-item" *ngFor="let camp of pastCamps">
         <div class="past-camp-info">
+          <div class="camp-image-placeholder">
+            <img src="{{ camp.image }}" alt="{{ camp.name }}" />
+          </div>
           <span class="past-camp-name">{{ camp.name }}</span>
           <span class="past-camp-meta">
             <i class="pi pi-map-marker"></i> {{ camp.location }} &nbsp;|&nbsp;
-            <i class="pi pi-calendar"></i> {{ camp.dateFrom | date:'d MMM yyyy':'':'pl' }} – {{ camp.dateTo | date:'d MMM yyyy':'':'pl' }}
+            <i class="pi pi-calendar"></i>
+            {{ camp.dateFrom | date: "d MMM yyyy" : "" : "pl" }} –
+            {{ camp.dateTo | date: "d MMM yyyy" : "" : "pl" }}
           </span>
+          <p class="camp-desc">{{ camp.description }}</p>
         </div>
         <p-tag value="Zakończony" severity="secondary" />
       </div>
     </div>
-
   </div>
 </section>
