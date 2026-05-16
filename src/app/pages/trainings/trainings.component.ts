@@ -6,8 +6,17 @@ import { TagModule } from 'primeng/tag';
 interface TrainingGroup {
   name: string;
   ageRange: string;
-  level: string;
-  schedule: { day: string; time: string; pool: string }[];
+  level?: string;
+  schedule: {
+    day: string;
+    timeW?: string;
+    workout?: string;
+    time: string;
+    pool: string;
+    place: string;
+    poolSummer?: string;
+    placeSummer?: string;
+  }[];
 }
 
 @Component({
@@ -15,64 +24,181 @@ interface TrainingGroup {
   standalone: true,
   imports: [CommonModule, TableModule, TagModule],
   templateUrl: './trainings.component.html',
-  styleUrl: './trainings.component.scss'
+  styleUrl: './trainings.component.scss',
 })
 export class TrainingsComponent {
   groups: TrainingGroup[] = [
     {
-      name: 'Grupa Żaki',
+      name: 'Dzieci',
       ageRange: '6–9 lat',
-      level: 'Początkujący',
+
       schedule: [
-        { day: 'Poniedziałek', time: '16:00–17:00', pool: 'Basen 25m' },
-        { day: 'Środa', time: '16:00–17:00', pool: 'Basen 25m' },
-        { day: 'Piątek', time: '16:30–17:30', pool: 'Basen 25m' },
-      ]
+        {
+          day: 'Poniedziałek',
+          time: '15:00–16:30',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+        {
+          day: 'Środa',
+          time: '15:00–16:30',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+        {
+          day: 'Piątek',
+          time: '15:00–16:30',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+      ],
     },
     {
-      name: 'Grupa Młodzik',
-      ageRange: '10–12 lat',
-      level: 'Średniozaawansowany',
+      name: 'Dzieci starsze',
+      ageRange: '10-11 lat',
       schedule: [
-        { day: 'Poniedziałek', time: '17:00–18:30', pool: 'Basen 50m' },
-        { day: 'Wtorek', time: '17:00–18:30', pool: 'Basen 50m' },
-        { day: 'Czwartek', time: '17:00–18:30', pool: 'Basen 50m' },
-        { day: 'Sobota', time: '9:00–10:30', pool: 'Basen 50m' },
-      ]
+        {
+          day: 'Poniedziałek',
+          time: '15:00–17:00',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+        {
+          day: 'Wtorek',
+          time: '15:00–17:00',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+        {
+          day: 'Środa',
+          time: '15:00–17:00',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+        {
+          day: 'Czwartek',
+          time: '15:00–17:00',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+        {
+          day: 'Piątek',
+          time: '15:00–17:00',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+        {
+          day: 'Sobota',
+          time: '11:00–12:30',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+      ],
     },
     {
-      name: 'Grupa Juniorsza',
-      ageRange: '13–15 lat',
-      level: 'Zaawansowany',
+      name: 'Młodzik',
+      ageRange: '12–13 lat',
       schedule: [
-        { day: 'Poniedziałek', time: '6:00–7:30', pool: 'Basen 50m' },
-        { day: 'Wtorek', time: '17:30–19:30', pool: 'Basen 50m' },
-        { day: 'Środa', time: '6:00–7:30', pool: 'Basen 50m' },
-        { day: 'Czwartek', time: '17:30–19:30', pool: 'Basen 50m' },
-        { day: 'Piątek', time: '6:00–7:30', pool: 'Basen 50m' },
-      ]
+        {
+          day: 'Poniedziałek',
+          time: '15:00–17:00',
+          pool: 'Basen 25m',
+          place: 'Proszówki / okres zimowy',
+          poolSummer: 'Basen 50m',
+          placeSummer: 'Dębica / okres letni',
+        },
+        {
+          day: 'Wtorek',
+          timeW: '6:15–7:15',
+          workout: 'Siłownia',
+          time: '15:00–17:00',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+        {
+          day: 'Środa',
+          time: '15:00–17:00',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+        {
+          day: 'Czwartek',
+          timeW: '6:15–7:15',
+          workout: 'Siłownia',
+          time: '15:00–17:00',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+        {
+          day: 'Piątek',
+          time: '15:00–17:00',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+        {
+          day: 'Sobota',
+          time: '11:00–12:30',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+      ],
     },
     {
-      name: 'Grupa Senior',
-      ageRange: '16+ lat',
-      level: 'Wyczynowy',
+      name: 'Junior Młodszy',
+      ageRange: '14–15 lat',
       schedule: [
-        { day: 'Poniedziałek', time: '6:00–8:00', pool: 'Basen 50m' },
-        { day: 'Wtorek', time: '6:00–8:00', pool: 'Basen 50m' },
-        { day: 'Środa', time: '17:00–19:30', pool: 'Basen 50m' },
-        { day: 'Czwartek', time: '6:00–8:00', pool: 'Basen 50m' },
-        { day: 'Piątek', time: '6:00–8:00', pool: 'Basen 50m' },
-        { day: 'Sobota', time: '8:00–10:00', pool: 'Basen 50m' },
-      ]
+        {
+          day: 'Poniedziałek',
+          time: '15:00–17:00',
+          pool: 'Basen 25m',
+          place: 'Proszówki / okres zimowy',
+          poolSummer: 'Basen 50m',
+          placeSummer: 'Dębica / okres letni',
+        },
+        {
+          day: 'Wtorek',
+          timeW: '6:15–7:15',
+          workout: 'Siłownia',
+          time: '15:00–17:00',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+        {
+          day: 'Środa',
+          time: '15:00–17:00',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+        {
+          day: 'Czwartek',
+          timeW: '6:15–7:15',
+          workout: 'Siłownia',
+          time: '15:00–17:00',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+        {
+          day: 'Piątek',
+          time: '15:00–17:00',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+        {
+          day: 'Sobota',
+          time: '11:00–12:30',
+          pool: 'Basen 25m',
+          place: 'Proszówki',
+        },
+      ],
     },
   ];
 
   levelSeverity(level: string): 'success' | 'warn' | 'danger' | 'info' {
     const map: Record<string, 'success' | 'warn' | 'danger' | 'info'> = {
-      'Początkujący': 'success',
-      'Średniozaawansowany': 'info',
-      'Zaawansowany': 'warn',
-      'Wyczynowy': 'danger',
+      Początkujący: 'success',
+      Średniozaawansowany: 'info',
+      Zaawansowany: 'warn',
+      Wyczynowy: 'danger',
     };
     return map[level] ?? 'info';
   }

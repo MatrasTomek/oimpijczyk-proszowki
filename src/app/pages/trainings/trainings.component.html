@@ -8,7 +8,7 @@
 <section class="section">
   <div class="container">
     <h2 class="section-title">Harmonogram treningów</h2>
-    <p class="section-subtitle">Wybierz grupę odpowiednią do swojego wieku i poziomu</p>
+    <p class="section-subtitle"></p>
 
     <div class="groups-grid">
       <div class="group-card card-dark" *ngFor="let group of groups">
@@ -17,25 +17,60 @@
             <h3 class="group-name">{{ group.name }}</h3>
             <span class="group-age">{{ group.ageRange }}</span>
           </div>
-          <p-tag [value]="group.level" [severity]="levelSeverity(group.level)" />
+          <p-tag
+            *ngIf="group.level"
+            [value]="group.level"
+            [severity]="levelSeverity(group.level)"
+          />
         </div>
         <div class="schedule-table">
           <div class="schedule-row" *ngFor="let s of group.schedule">
             <span class="schedule-day">{{ s.day }}</span>
-            <span class="schedule-time"><i class="pi pi-clock"></i> {{ s.time }}</span>
-            <span class="schedule-pool"><i class="pi pi-map-marker"></i> {{ s.pool }}</span>
+            <div class="schedule-sessions">
+              <div
+                *ngIf="s.timeW"
+                class="schedule-session schedule-session--workout"
+              >
+                <span class="schedule-time"
+                  ><i class="pi pi-clock"></i> {{ s.timeW }}</span
+                >
+                <span class="schedule-pool"
+                  ><i class="pi pi-bolt"></i> {{ s.workout }}</span
+                >
+              </div>
+              <div class="schedule-session">
+                <span class="schedule-time"
+                  ><i class="pi pi-clock"></i> {{ s.time }}</span
+                >
+                <span class="schedule-pool"
+                  ><i class="pi pi-map-marker"></i> {{ s.pool }} –
+                  {{ s.place }}</span
+                >
+              </div>
+              <div
+                *ngIf="s.poolSummer"
+                class="schedule-session schedule-session--summer"
+              >
+                <span class="schedule-pool"
+                  ><i class="pi pi-map-marker"></i> {{ s.poolSummer }} –
+                  {{ s.placeSummer }}</span
+                >
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="info-box">
+    <!-- <div class="info-box">
       <i class="pi pi-info-circle"></i>
       <div>
         <strong>Informacje o zapisach</strong>
-        <p>Aby zapisać dziecko do grupy, skontaktuj się z trenerem lub biurem klubu.
-        Wymagane jest aktualne orzeczenie lekarskie oraz licencja PZP.</p>
+        <p>
+          Aby zapisać dziecko do grupy, skontaktuj się z trenerem lub biurem
+          klubu. Wymagane jest aktualne orzeczenie lekarskie oraz licencja PZP.
+        </p>
       </div>
-    </div>
+    </div> -->
   </div>
 </section>
