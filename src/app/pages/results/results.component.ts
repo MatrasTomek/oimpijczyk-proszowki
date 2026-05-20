@@ -19,7 +19,7 @@ export class ResultsComponent implements OnInit {
   ngOnInit() {
     this.resultsService.getAll().subscribe({
       next: (data) => {
-        this.results = data.map(r => ({
+        this.results = data.map((r) => ({
           ...r,
           result: r.result_time,
           date: r.competition_date,
