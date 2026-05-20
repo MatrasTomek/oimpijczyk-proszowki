@@ -10,8 +10,14 @@
     <h2 class="section-title">Ostatnie wyniki</h2>
     <p class="section-subtitle">Osiągnięcia naszych zawodników na zawodach</p>
 
-    <p-table [value]="results" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]"
-             styleClass="results-table" [tableStyle]="{'min-width': '700px'}">
+    <p-table
+      [value]="results"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      styleClass="results-table"
+      [tableStyle]="{ 'min-width': '700px' }"
+    >
       <ng-template pTemplate="header">
         <tr>
           <th>Zawodnik</th>
@@ -29,9 +35,12 @@
           <td>{{ r.discipline }}</td>
           <td class="result-time">{{ r.result }}</td>
           <td>
-            <p-tag [value]="medalLabel(r.place)" [severity]="medalColor(r.place)" />
+            <p-tag
+              [value]="medalLabel(r.place)"
+              [severity]="medalColor(r.place)"
+            />
           </td>
-          <td>{{ r.date | date:'d MMM yyyy':'':'pl' }}</td>
+          <td>{{ r.date | date: "d MMM yyyy" : "" : "pl" }}</td>
         </tr>
       </ng-template>
     </p-table>

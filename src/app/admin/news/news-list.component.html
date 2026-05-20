@@ -18,7 +18,7 @@
     <tr>
       <td>{{ item.title }}</td>
       <td>{{ item.category }}</td>
-      <td>{{ item.date | date:'d MMM yyyy':'':'pl' }}</td>
+      <td>{{ item.published_at | date:'d MMM yyyy':'':'pl' }}</td>
       <td>
         <div class="action-btns">
           <button pButton icon="pi pi-pencil" class="p-button-sm p-button-outlined" (click)="openEdit(item)"></button>
@@ -51,8 +51,8 @@
       <textarea pTextarea [(ngModel)]="editItem.content" rows="6" class="w-full"></textarea>
     </div>
     <div class="field">
-      <label>Data</label>
-      <input pInputText type="date" [(ngModel)]="editItem.date" class="w-full" />
+      <label>Data publikacji</label>
+      <input pInputText type="date" [(ngModel)]="editItem.published_at" class="w-full" />
     </div>
   </div>
   <ng-template pTemplate="footer">

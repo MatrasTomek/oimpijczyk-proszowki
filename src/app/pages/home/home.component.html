@@ -4,42 +4,34 @@
   <div class="container hero-content">
     <img src="assets/logo.jpg" alt="Olimpijczyk Proszówki" class="hero-logo" />
     <h1 class="hero-title">
-      Stowarzyszenie<br /><span>Olimpijczyk Proszówki</span>
+      Stowarzyszenie<br /><span class="text-gold">Olimpijczyk Proszówki</span>
     </h1>
     <p class="hero-subtitle">
       Licencjonowani zawodnicy na arenach całej Polski
     </p>
     <div class="hero-actions">
-      <a
-        routerLink="/treningi"
-        pButton
-        label="Nasze treningi"
-        class="p-button"
-      ></a>
-      <a
-        routerLink="/o-nas"
-        pButton
-        label="Poznaj nas"
-        class="p-button p-button-outlined"
-      ></a>
+      <a routerLink="/treningi" pButton label="Nasze treningi" class="p-button"></a>
+      <a routerLink="/o-nas" pButton label="Poznaj nas" class="p-button p-button-outlined"></a>
     </div>
   </div>
   <picture class="hero-photo">
     <source media="(max-width: 768px)" srcset="assets/start_small.jpg" />
     <img src="assets/start_big.jpg" alt="Olimpijczyk Proszówki" />
   </picture>
-  <div class="hero-wave">
-    <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#000000" />
-    </svg>
+  <div class="hero-scroll-indicator">
+    <span class="scroll-label">Przewiń</span>
+    <div class="scroll-arrow">
+      <i class="pi pi-chevron-down"></i>
+    </div>
   </div>
+  <div class="hero-cut"></div>
 </section>
 
 <!-- ─── Stats ─── -->
 <section class="stats-section">
   <div class="container stats-grid">
-    <div class="stat-item" *ngFor="let stat of stats">
-      <span class="stat-value">{{ stat.value }}</span>
+    <div class="stat-item" *ngFor="let stat of stats; let i = index" appReveal [revealDelay]="i * 80">
+      <span class="stat-value">{{ displayStats[i] }}</span>
       <span class="stat-label">{{ stat.label }}</span>
     </div>
   </div>
@@ -48,13 +40,15 @@
 <!-- ─── Presence ─── -->
 <section class="section presence-section">
   <div class="container">
-    <h2 class="section-title">Gdzie nas można spotkać</h2>
-    <p class="section-subtitle">
-      Aktywni przez cały rok — na zawodach, obozach i wydarzeniach w całej
-      Polsce
-    </p>
+    <div appReveal>
+      <h2 class="section-title">Gdzie nas można spotkać</h2>
+      <p class="section-subtitle">
+        Aktywni przez cały rok — na zawodach, obozach i wydarzeniach w całej Polsce
+      </p>
+    </div>
     <div class="presence-grid">
-      <div class="presence-card" *ngFor="let item of presenceItems">
+      <div class="presence-card" *ngFor="let item of presenceItems; let i = index"
+           appReveal [revealDelay]="(i % 2) * 120">
         <div
           class="presence-card-image"
           [class.no-image]="!item.image"
@@ -64,12 +58,12 @@
           <span class="presence-icon" *ngIf="!item.image">
             <i [class]="'pi ' + item.icon"></i>
           </span>
-        </div>
-        <div class="presence-card-body">
-          <div class="presence-metric">
+          <div class="presence-card-meta">
             <span class="metric-value">{{ item.metric }}</span>
             <span class="metric-label">{{ item.metricLabel }}</span>
           </div>
+        </div>
+        <div class="presence-card-body">
           <h3 class="presence-title">{{ item.title }}</h3>
           <p class="presence-description">{{ item.description }}</p>
         </div>
@@ -81,101 +75,71 @@
 <!-- ─── News ─── -->
 <section class="section news-section">
   <div class="container">
-    <h2 class="section-title">Aktualności</h2>
-    <p class="section-subtitle">Najnowsze informacje z życia klubu</p>
-    <div class="news-tabs">
-      <a routerLink="/wyniki" class="news-tab">Wyniki</a>
-      <a routerLink="/obozy" class="news-tab">Obozy</a>
-      <a routerLink="/treningi" class="news-tab">Treningi</a>
+    <div appReveal>
+      <h2 class="section-title">Aktualności</h2>
+      <p class="section-subtitle">Najnowsze informacje z życia klubu</p>
     </div>
     <div class="news-grid">
-      <a
-        class="card-dark news-card"
-        *ngFor="let item of latestNews"
-        [routerLink]="categoryRoute(item.category)"
-      >
+      <!-- Featured article -->
+      <a class="card-dark news-card news-card--featured" appReveal [revealDelay]="0"
+         [routerLink]="categoryRoute(latestNews[0].category)">
         <div class="news-card-body">
-          <p-tag [value]="item.category" severity="warn" class="news-tag" />
-          <h3 class="news-title">{{ item.title }}</h3>
-          <p class="news-excerpt">{{ item.excerpt }}</p>
-          <span class="news-date">{{
-            item.date | date: "d MMMM yyyy" : "" : "pl"
-          }}</span>
+          <p-tag [value]="latestNews[0].category" severity="warn" class="news-tag" />
+          <h3 class="news-title">{{ latestNews[0].title }}</h3>
+          <p class="news-excerpt">{{ latestNews[0].excerpt }}</p>
+          <div class="news-footer">
+            <span class="news-date">{{ latestNews[0].published_at | date:'d MMMM yyyy':'':'pl' }}</span>
+            <span class="news-read-more">Czytaj więcej <i class="pi pi-arrow-right"></i></span>
+          </div>
         </div>
       </a>
+
+      <!-- Secondary articles -->
+      <div class="news-secondary">
+        <a class="card-dark news-card" *ngFor="let item of latestNews.slice(1); let i = index"
+           appReveal [revealDelay]="(i + 1) * 100"
+           [routerLink]="categoryRoute(item.category)">
+          <div class="news-card-body">
+            <p-tag [value]="item.category" severity="warn" class="news-tag" />
+            <h3 class="news-title">{{ item.title }}</h3>
+            <p class="news-excerpt">{{ item.excerpt }}</p>
+            <div class="news-footer">
+              <span class="news-date">{{ item.published_at | date:'d MMMM yyyy':'':'pl' }}</span>
+            </div>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ───About us ─── -->
+<!-- ─── About ─── -->
 <section class="section about-section">
   <div class="container about-inner">
-    <div class="about-text">
-      <h2 class="section-title" style="text-align: left">O naszym klubie</h2>
+    <div class="about-text" appReveal revealDir="left">
+      <h2 class="section-title title-left">O naszym klubie</h2>
       <p>
-        Stowarzyszenie Olimpijczyk Proszówki to prężnie działający klub
-        pływacki, który od ponad 5 lat kształtuje sportowe talenty i wychowuje
-        licencjonowanych zawodników. Startujemy w zawodach na terenie całej
-        Polski, reprezentując nasze barwy na dziesiątkach imprez każdego roku.
+        Stowarzyszenie Olimpijczyk Proszówki to prężnie działający klub pływacki,
+        który od ponad 5 lat kształtuje sportowe talenty i wychowuje licencjonowanych
+        zawodników. Startujemy w zawodach na terenie całej Polski, reprezentując nasze
+        barwy na dziesiątkach imprez każdego roku.
       </p>
       <p>
-        Posiadamy wykwalifikowaną kadrę trenerską i systematyczny program
-        szkolenia — nasi zawodnicy regularnie stają na podium Mistrzostw
-        Małopolski i zawodów rangi krajowej, budując rozpoznawalność klubu w
-        całym środowisku pływackim.
+        Posiadamy wykwalifikowaną kadrę trenerską i systematyczny program szkolenia —
+        nasi zawodnicy regularnie stają na podium Mistrzostw Małopolski i zawodów
+        rangi krajowej, budując rozpoznawalność klubu w całym środowisku pływackim.
       </p>
-      <a
-        routerLink="/o-nas"
-        pButton
-        label="Dowiedz się więcej"
-        class="p-button"
-        style="margin-top: 1.5rem"
-      ></a>
+      <a routerLink="/o-nas" pButton label="Dowiedz się więcej" class="p-button"
+         style="margin-top: 1.5rem"></a>
     </div>
-    <div class="about-visual">
+    <div class="about-visual" appReveal revealDir="right">
       <div class="visual-placeholder">
         <img
           src="assets/all-start.jpeg"
           alt="Zdjęcie klubu"
-          style="
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 8px;
-          "
+          style="width:100%;height:100%;object-fit:cover;border-radius:8px;"
         />
       </div>
     </div>
   </div>
 </section>
-
-<!-- ─── Najbliższy obóz ─── -->
-<!-- <section class="section camp-section">
-  <div class="container">
-    <h2 class="section-title">Najbliższy obóz</h2>
-    <p class="section-subtitle">Nie przegap okazji na intensywny trening</p>
-    <div class="camp-banner">
-      <div class="camp-info">
-        <h3 class="camp-name">{{ nextCamp.name }}</h3>
-        <div class="camp-details">
-          <span><i class="pi pi-map-marker"></i> {{ nextCamp.location }}</span>
-          <span
-            ><i class="pi pi-calendar"></i>
-            {{ nextCamp.dateFrom | date: "d MMM" : "" : "pl" }} –
-            {{ nextCamp.dateTo | date: "d MMM yyyy" : "" : "pl" }}</span
-          >
-          <span class="spots"
-            ><i class="pi pi-users"></i> Wolnych miejsc:
-            <strong>{{ nextCamp.spotsLeft }}</strong></span
-          >
-        </div>
-      </div>
-      <a
-        routerLink="/obozy"
-        pButton
-        label="Dowiedz się więcej"
-        class="p-button"
-      ></a>
-    </div>
-  </div>
-</section> -->

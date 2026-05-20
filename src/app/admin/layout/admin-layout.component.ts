@@ -27,6 +27,15 @@ import { ButtonModule } from 'primeng/button';
           <a routerLink="/admin/camps" routerLinkActive="active" class="sidebar-link">
             <i class="pi pi-calendar"></i> Obozy
           </a>
+          <a routerLink="/admin/results" routerLinkActive="active" class="sidebar-link">
+            <i class="pi pi-chart-bar"></i> Wyniki
+          </a>
+          <a routerLink="/admin/presence" routerLinkActive="active" class="sidebar-link">
+            <i class="pi pi-id-card"></i> Sekcja obecności
+          </a>
+          <a routerLink="/admin/trainings" routerLinkActive="active" class="sidebar-link">
+            <i class="pi pi-clock"></i> Treningi
+          </a>
         </nav>
         <div class="sidebar-footer">
           <a routerLink="/" class="sidebar-link"><i class="pi pi-globe"></i> Przejdź do strony</a>

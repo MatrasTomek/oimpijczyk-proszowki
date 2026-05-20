@@ -1,15 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GalleriaModule } from 'primeng/galleria';
 import { TagModule } from 'primeng/tag';
-
-interface GalleryItem {
-  id: number;
-  title: string;
-  category: string;
-  thumbnailSrc: string;
-  imageSrc: string;
-}
+import { GalleryService, GalleryImage } from '../../core/services/gallery.service';
 
 @Component({
   selector: 'app-gallery',
@@ -18,26 +11,37 @@ interface GalleryItem {
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.scss'
 })
-export class GalleryComponent {
+export class GalleryComponent implements OnInit {
+  galleryService = inject(GalleryService);
+
   categories = ['Wszystkie', 'Zawody', 'Treningi', 'Obozy'];
   selectedCategory = 'Wszystkie';
 
-  items: GalleryItem[] = [
-    { id: 1, title: 'Mistrzostwa Małopolski 2025', category: 'Zawody', thumbnailSrc: '', imageSrc: '' },
-    { id: 2, title: 'Trening poranny', category: 'Treningi', thumbnailSrc: '', imageSrc: '' },
-    { id: 3, title: 'Obóz w Krynicy 2024', category: 'Obozy', thumbnailSrc: '', imageSrc: '' },
-    { id: 4, title: 'Puchar Polski 2025', category: 'Zawody', thumbnailSrc: '', imageSrc: '' },
-    { id: 5, title: 'Zajęcia z wychowania fizycznego', category: 'Treningi', thumbnailSrc: '', imageSrc: '' },
-    { id: 6, title: 'Obóz letni 2024', category: 'Obozy', thumbnailSrc: '', imageSrc: '' },
-  ];
+  items: GalleryImage[] = [];
 
-  get filteredItems() {
+  ngOnInit() {
+    this.galleryService.getAll().subscribe({
+      next: (data) => { this.items = data; },
+      error: () => {},
+    });
+  }
+
+  get filteredItems(): GalleryImage[] {
     if (this.selectedCategory === 'Wszystkie') return this.items;
     return this.items.filter(i => i.category === this.selectedCategory);
   }
 
   lightboxVisible = false;
   lightboxIndex = 0;
+
+  get lightboxImages() {
+    return this.filteredItems.map(i => ({
+      itemImageSrc: this.galleryService.imageUrl(i.filename),
+      thumbnailImageSrc: this.galleryService.imageUrl(i.filename),
+      alt: i.title ?? i.filename,
+      title: i.title ?? '',
+    }));
+  }
 
   openLightbox(index: number) {
     this.lightboxIndex = index;

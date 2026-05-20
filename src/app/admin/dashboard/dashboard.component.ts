@@ -26,12 +26,27 @@ import { RouterLink } from '@angular/router';
         <span class="dash-label">Obozy</span>
         <span class="dash-hint">Zarządzaj obozami</span>
       </a>
+      <a routerLink="/admin/results" class="dash-card">
+        <i class="pi pi-chart-bar"></i>
+        <span class="dash-label">Wyniki</span>
+        <span class="dash-hint">Wyniki zawodów</span>
+      </a>
+      <a routerLink="/admin/presence" class="dash-card">
+        <i class="pi pi-id-card"></i>
+        <span class="dash-label">Sekcja obecności</span>
+        <span class="dash-hint">Karty na stronie głównej</span>
+      </a>
+      <a routerLink="/admin/trainings" class="dash-card">
+        <i class="pi pi-clock"></i>
+        <span class="dash-label">Treningi</span>
+        <span class="dash-hint">Harmonogram i grupy</span>
+      </a>
     </div>
   `,
   styles: [`
     .admin-page-title { font-family: 'Oswald', sans-serif; font-size: 2rem; color: #F5A623; text-transform: uppercase; margin-bottom: 0.25rem; }
     .admin-page-sub { color: #aaa; margin-bottom: 2.5rem; }
-    .dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
     .dash-card {
       background: #111; border: 1px solid #2a2a2a; border-radius: 12px;
       padding: 2rem; display: flex; flex-direction: column; align-items: center;

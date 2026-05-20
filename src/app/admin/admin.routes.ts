@@ -1,10 +1,8 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './auth/auth.guard';
 
 export const adminRoutes: Routes = [
   {
     path: '',
-    canActivate: [authGuard],
     loadComponent: () => import('./layout/admin-layout.component').then(m => m.AdminLayoutComponent),
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -12,6 +10,9 @@ export const adminRoutes: Routes = [
       { path: 'news', loadComponent: () => import('./news/news-list.component').then(m => m.NewsListComponent) },
       { path: 'gallery', loadComponent: () => import('./gallery/gallery-list.component').then(m => m.GalleryListComponent) },
       { path: 'camps', loadComponent: () => import('./camps/camps-list.component').then(m => m.CampsListComponent) },
+      { path: 'results', loadComponent: () => import('./results/results-list.component').then(m => m.ResultsListComponent) },
+      { path: 'presence', loadComponent: () => import('./presence/presence-list.component').then(m => m.PresenceListComponent) },
+      { path: 'trainings', loadComponent: () => import('./trainings/trainings-list.component').then(m => m.TrainingsListComponent) },
     ]
   },
   { path: 'login', loadComponent: () => import('./auth/login.component').then(m => m.LoginComponent) },

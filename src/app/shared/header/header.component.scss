@@ -4,13 +4,15 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background: rgba(0, 0, 0, 0.9);
-  border-bottom: 2px solid transparent;
-  transition: border-color 0.3s, background 0.3s;
+  background: rgba(0, 0, 0, 0);
+  border-bottom: 1px solid transparent;
+  transition: background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease;
 
   &.scrolled {
-    background: rgba(0, 0, 0, 0.98);
-    border-bottom-color: var(--color-primary);
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(18px) saturate(1.5);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
+    border-bottom-color: rgba(245, 166, 35, 0.35);
   }
 }
 
@@ -24,6 +26,9 @@
 .logo-link {
   display: flex;
   align-items: center;
+  transition: opacity 0.2s;
+
+  &:hover { opacity: 0.85; }
 }
 
 .logo-img {
@@ -33,25 +38,51 @@
 
 .desktop-nav {
   display: flex;
-  gap: 0.25rem;
+  gap: 0.1rem;
 
   @media (max-width: 900px) { display: none; }
 }
 
 .nav-link {
-  padding: 0.5rem 0.9rem;
-  color: var(--color-text);
+  padding: 0.5rem 1rem;
+  color: rgba(255, 255, 255, 0.85);
   font-family: var(--font-heading);
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  border-bottom: 2px solid transparent;
-  transition: color 0.2s, border-color 0.2s;
+  position: relative;
+  transition: color 0.2s;
 
-  &:hover, &.active {
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    right: 50%;
+    height: 2px;
+    background: var(--color-primary);
+    border-radius: 1px;
+    transition: left 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+                right 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &:hover {
     color: var(--color-primary);
-    border-bottom-color: var(--color-primary);
+
+    &::after {
+      left: 0.75rem;
+      right: 0.75rem;
+    }
+  }
+
+  &.active {
+    color: var(--color-primary);
+
+    &::after {
+      left: 0.75rem;
+      right: 0.75rem;
+    }
   }
 }
 
@@ -68,11 +99,18 @@
 
   span {
     display: block;
-    width: 26px;
+    width: 24px;
     height: 2px;
     background: var(--color-primary);
-    border-radius: 2px;
-    transition: background 0.2s;
+    border-radius: 1px;
+    transition: background 0.2s, transform 0.3s, opacity 0.3s;
+    transform-origin: center;
+  }
+
+  &.open {
+    span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
   }
 }
 
@@ -81,9 +119,10 @@
   position: fixed;
   inset: 0;
   z-index: 1099;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   opacity: 0;
   transition: opacity 0.3s;
+  backdrop-filter: blur(4px);
 
   &.open {
     display: block;
@@ -98,9 +137,10 @@
   bottom: 0;
   z-index: 1100;
   width: 280px;
-  background: #111;
+  background: #0d0d0d;
+  border-left: 1px solid rgba(245, 166, 35, 0.2);
   transform: translateX(100%);
-  transition: transform 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 
   &.open {
     transform: translateX(0);
@@ -112,7 +152,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.25rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .drawer-logo {
@@ -123,37 +163,36 @@
 .drawer-close {
   background: none;
   border: none;
-  color: var(--color-text);
-  font-size: 1.25rem;
+  color: var(--color-text-muted);
+  font-size: 1.1rem;
   cursor: pointer;
   padding: 0.25rem 0.5rem;
   line-height: 1;
+  transition: color 0.2s;
 
-  &:hover {
-    color: var(--color-primary);
-  }
+  &:hover { color: var(--color-primary); }
 }
 
 .mobile-nav {
   display: flex;
   flex-direction: column;
-  padding: 1rem 0;
+  padding: 0.75rem 0;
 }
 
 .mobile-nav-link {
-  padding: 0.9rem 1.5rem;
-  color: var(--color-text);
+  padding: 0.85rem 1.5rem;
+  color: rgba(255, 255, 255, 0.75);
   font-family: var(--font-heading);
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-left: 3px solid transparent;
+  letter-spacing: 0.08em;
+  border-left: 2px solid transparent;
   transition: color 0.2s, border-color 0.2s, background 0.2s;
 
   &:hover, &.active {
     color: var(--color-primary);
     border-left-color: var(--color-primary);
-    background: rgba(245, 166, 35, 0.08);
+    background: rgba(245, 166, 35, 0.06);
   }
 }

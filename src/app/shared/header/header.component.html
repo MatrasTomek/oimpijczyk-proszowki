@@ -18,7 +18,7 @@
     </nav>
 
     <!-- Hamburger -->
-    <button class="hamburger" (click)="menuOpen.set(true)" aria-label="Otwórz menu">
+    <button class="hamburger" [class.open]="menuOpen()" (click)="menuOpen.set(!menuOpen())" aria-label="Otwórz/zamknij menu">
       <span></span><span></span><span></span>
     </button>
   </div>

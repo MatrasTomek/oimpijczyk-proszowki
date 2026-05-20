@@ -1,22 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
+import { TrainingsService } from '../../core/services/trainings.service';
 
-interface TrainingGroup {
+interface ScheduleRow {
+  day: string;
+  timeW?: string;
+  workout?: string;
+  time: string;
+  pool: string;
+  place: string;
+  poolSummer?: string;
+  placeSummer?: string;
+}
+
+interface TrainingGroupDisplay {
   name: string;
   ageRange: string;
   level?: string;
-  schedule: {
-    day: string;
-    timeW?: string;
-    workout?: string;
-    time: string;
-    pool: string;
-    place: string;
-    poolSummer?: string;
-    placeSummer?: string;
-  }[];
+  schedule: ScheduleRow[];
 }
 
 @Component({
@@ -26,180 +29,37 @@ interface TrainingGroup {
   templateUrl: './trainings.component.html',
   styleUrl: './trainings.component.scss',
 })
-export class TrainingsComponent {
-  groups: TrainingGroup[] = [
-    {
-      name: 'Dzieci',
-      ageRange: '6–9 lat',
+export class TrainingsComponent implements OnInit {
+  private trainingsService = inject(TrainingsService);
 
-      schedule: [
-        {
-          day: 'Poniedziałek',
-          time: '15:00–16:30',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-        {
-          day: 'Środa',
-          time: '15:00–16:30',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-        {
-          day: 'Piątek',
-          time: '15:00–16:30',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-      ],
-    },
-    {
-      name: 'Dzieci starsze',
-      ageRange: '10-11 lat',
-      schedule: [
-        {
-          day: 'Poniedziałek',
-          time: '15:00–17:00',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-        {
-          day: 'Wtorek',
-          time: '15:00–17:00',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-        {
-          day: 'Środa',
-          time: '15:00–17:00',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-        {
-          day: 'Czwartek',
-          time: '15:00–17:00',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-        {
-          day: 'Piątek',
-          time: '15:00–17:00',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-        {
-          day: 'Sobota',
-          time: '11:00–12:30',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-      ],
-    },
-    {
-      name: 'Młodzik',
-      ageRange: '12–13 lat',
-      schedule: [
-        {
-          day: 'Poniedziałek',
-          time: '15:00–17:00',
-          pool: 'Basen 25m',
-          place: 'Proszówki / okres zimowy',
-          poolSummer: 'Basen 50m',
-          placeSummer: 'Dębica / okres letni',
-        },
-        {
-          day: 'Wtorek',
-          timeW: '6:15–7:15',
-          workout: 'Siłownia',
-          time: '15:00–17:00',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-        {
-          day: 'Środa',
-          time: '15:00–17:00',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-        {
-          day: 'Czwartek',
-          timeW: '6:15–7:15',
-          workout: 'Siłownia',
-          time: '15:00–17:00',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-        {
-          day: 'Piątek',
-          time: '15:00–17:00',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-        {
-          day: 'Sobota',
-          time: '11:00–12:30',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-      ],
-    },
-    {
-      name: 'Junior Młodszy',
-      ageRange: '14–15 lat',
-      schedule: [
-        {
-          day: 'Poniedziałek',
-          time: '15:00–17:00',
-          pool: 'Basen 25m',
-          place: 'Proszówki / okres zimowy',
-          poolSummer: 'Basen 50m',
-          placeSummer: 'Dębica / okres letni',
-        },
-        {
-          day: 'Wtorek',
-          timeW: '6:15–7:15',
-          workout: 'Siłownia',
-          time: '15:00–17:00',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-        {
-          day: 'Środa',
-          time: '15:00–17:00',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-        {
-          day: 'Czwartek',
-          timeW: '6:15–7:15',
-          workout: 'Siłownia',
-          time: '15:00–17:00',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-        {
-          day: 'Piątek',
-          time: '15:00–17:00',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-        {
-          day: 'Sobota',
-          time: '11:00–12:30',
-          pool: 'Basen 25m',
-          place: 'Proszówki',
-        },
-      ],
-    },
-  ];
+  groups: TrainingGroupDisplay[] = [];
 
-  levelSeverity(level: string): 'success' | 'warn' | 'danger' | 'info' {
-    const map: Record<string, 'success' | 'warn' | 'danger' | 'info'> = {
-      Początkujący: 'success',
-      Średniozaawansowany: 'info',
-      Zaawansowany: 'warn',
-      Wyczynowy: 'danger',
-    };
-    return map[level] ?? 'info';
+  ngOnInit() {
+    this.trainingsService.getGroups().subscribe({
+      next: (data) => {
+        this.groups = data.map(g => ({
+          name: g.name,
+          ageRange: g.age_range,
+          level: g.level ?? undefined,
+          schedule: g.sessions.map(s => ({
+            day: s.day_of_week,
+            time: s.time_start,
+            timeW: s.time_morning ?? undefined,
+            workout: s.workout_type ?? undefined,
+            pool: s.pool ?? '',
+            place: s.location ?? '',
+            poolSummer: s.pool_summer ?? undefined,
+            placeSummer: s.location_summer ?? undefined,
+          })),
+        }));
+      },
+      error: () => {},
+    });
+  }
+
+  levelSeverity(level: string): 'success' | 'warn' | 'info' | 'secondary' {
+    if (level?.toLowerCase().includes('zaawan')) return 'warn';
+    if (level?.toLowerCase().includes('senior')) return 'success';
+    return 'info';
   }
 }

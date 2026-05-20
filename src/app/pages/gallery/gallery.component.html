@@ -27,15 +27,26 @@
         *ngFor="let item of filteredItems; let i = index"
         (click)="openLightbox(i)"
       >
-        <div class="gallery-placeholder">
-          <i class="pi pi-image"></i>
-        </div>
+        <img [src]="galleryService.imageUrl(item.filename)" [alt]="item.title ?? item.filename" loading="lazy" class="gallery-img" />
         <div class="gallery-overlay">
-          <p class="gallery-title">{{ item.title }}</p>
+          <p class="gallery-title">{{ item.title ?? item.filename }}</p>
           <p-tag [value]="item.category" severity="warn" />
         </div>
       </div>
     </div>
+
+    <p-galleria
+      [(visible)]="lightboxVisible"
+      [value]="lightboxImages"
+      [(activeIndex)]="lightboxIndex"
+      [fullScreen]="true"
+      [showItemNavigators]="true"
+      [showThumbnails]="false"
+    >
+      <ng-template pTemplate="item" let-img>
+        <img [src]="img.itemImageSrc" [alt]="img.alt" style="max-height:90vh;max-width:100%;" />
+      </ng-template>
+    </p-galleria>
 
     <div class="empty-state" *ngIf="filteredItems.length === 0">
       <i class="pi pi-images"></i>

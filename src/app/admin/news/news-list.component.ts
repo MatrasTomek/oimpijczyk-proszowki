@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
@@ -9,15 +9,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-
-interface NewsItem {
-  id: number;
-  title: string;
-  excerpt: string;
-  content: string;
-  date: string;
-  category: string;
-}
+import { NewsService, NewsItem } from '../../core/services/news.service';
 
 @Component({
   selector: 'app-news-list',
@@ -37,65 +29,62 @@ interface NewsItem {
   templateUrl: './news-list.component.html',
   styleUrl: './news-list.component.scss',
 })
-export class NewsListComponent {
-  items = signal<NewsItem[]>([
-    {
-      id: 1,
-      title: 'Sukces na Mistrzostwach Małopolski',
-      excerpt: 'Nasi zawodnicy zdobyli 5 złotych medali...',
-      content: '',
-      date: '2025-04-20',
-      category: 'Wyniki',
-    },
-    {
-      id: 2,
-      title: 'Letni Obóz Szkoleniowy 2026',
-      excerpt: 'Zobacz jak i gdzie robimy formę!',
-      content: '',
-      date: '2026-08-30',
-      category: 'Obozy',
-    },
-  ]);
+export class NewsListComponent implements OnInit {
+  private newsService = inject(NewsService);
+  private messageService = inject(MessageService);
+
+  items = signal<NewsItem[]>([]);
+  isLoading = signal(false);
 
   dialogVisible = false;
   editItem: Partial<NewsItem> = {};
   isNew = false;
 
+  ngOnInit() {
+    this.load();
+  }
+
+  load() {
+    this.isLoading.set(true);
+    this.newsService.getAll().subscribe({
+      next: (data) => { this.items.set(data); this.isLoading.set(false); },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'Błąd', detail: 'Nie można załadować aktualności' });
+        this.isLoading.set(false);
+      },
+    });
+  }
+
   openNew() {
-    this.editItem = {
-      title: '',
-      excerpt: '',
-      content: '',
-      category: '',
-      date: new Date().toISOString().split('T')[0],
-    };
+    this.editItem = { title: '', excerpt: '', content: '', category: 'Ogólne', published_at: new Date().toISOString().split('T')[0] };
     this.isNew = true;
     this.dialogVisible = true;
   }
 
   openEdit(item: NewsItem) {
-    this.editItem = { ...item };
+    this.editItem = { ...item, published_at: item.published_at?.split('T')[0] ?? '' };
     this.isNew = false;
     this.dialogVisible = true;
   }
 
   save() {
     if (this.isNew) {
-      const newItem = { ...this.editItem, id: Date.now() } as NewsItem;
-      this.items.update((list) => [...list, newItem]);
+      this.newsService.create(this.editItem).subscribe({
+        next: () => { this.dialogVisible = false; this.load(); this.messageService.add({ severity: 'success', summary: 'Dodano', detail: 'Aktualność została dodana' }); },
+        error: () => this.messageService.add({ severity: 'error', summary: 'Błąd', detail: 'Nie udało się dodać' }),
+      });
     } else {
-      this.items.update((list) =>
-        list.map((i) =>
-          i.id === this.editItem.id
-            ? ({ ...i, ...this.editItem } as NewsItem)
-            : i,
-        ),
-      );
+      this.newsService.update(this.editItem.id!, this.editItem).subscribe({
+        next: () => { this.dialogVisible = false; this.load(); this.messageService.add({ severity: 'success', summary: 'Zapisano', detail: 'Aktualność zaktualizowana' }); },
+        error: () => this.messageService.add({ severity: 'error', summary: 'Błąd', detail: 'Nie udało się zapisać' }),
+      });
     }
-    this.dialogVisible = false;
   }
 
   delete(id: number) {
-    this.items.update((list) => list.filter((i) => i.id !== id));
+    this.newsService.delete(id).subscribe({
+      next: () => { this.load(); this.messageService.add({ severity: 'success', summary: 'Usunięto', detail: 'Aktualność usunięta' }); },
+      error: () => this.messageService.add({ severity: 'error', summary: 'Błąd', detail: 'Nie udało się usunąć' }),
+    });
   }
 }
