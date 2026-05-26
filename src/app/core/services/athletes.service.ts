@@ -113,4 +113,8 @@ export class AthletesService {
       }),
     );
   }
+
+  getAthletesData(): Observable<AthletesData> {
+    return this.http.get<AthletesData>(this.dataUrl);
+  }
 }

@@ -8,7 +8,9 @@
 <section class="section">
   <div class="container">
     <h2 class="section-title">Najlepsze wyniki ostatnich zawodów</h2>
-    <p class="section-subtitle">Najwyżej punktowany start każdego zawodnika z ostatnich zawodów</p>
+    <p class="section-subtitle">
+      Najwyżej punktowany start każdego zawodnika z ostatnich zawodów
+    </p>
 
     <p-table
       [value]="bestResults"
@@ -45,37 +47,135 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section section--analysis">
   <div class="container">
     <h2 class="section-title">Analiza wyników</h2>
-    <p class="section-subtitle">Wszystkie starty z punktacją FINA/WA ze wszystkich zawodów</p>
+    <p class="section-subtitle">
+      Wybierz zawodnika, aby zobaczyć jego postępy i statystyki startów
+    </p>
 
     @if (analysisLoading) {
       <div class="analysis-loading">
-        <i class="pi pi-spin pi-spinner" style="font-size:2rem;color:var(--color-primary)"></i>
+        <i
+          class="pi pi-spin pi-spinner"
+          style="font-size: 2rem; color: var(--color-primary)"
+        ></i>
       </div>
     } @else {
-      <div class="charts-grid">
-        <div class="chart-card" appReveal>
-          <h3 class="chart-title">Starty według basenu</h3>
-          <div echarts [options]="poolChartOptions" class="chart-host"></div>
-        </div>
-
-        <div class="chart-card" appReveal [revealDelay]="100">
-          <h3 class="chart-title">Starty według stylu</h3>
-          <div echarts [options]="styleChartOptions" class="chart-host"></div>
-        </div>
-
-        <div class="chart-card chart-card--wide" appReveal [revealDelay]="200">
-          <h3 class="chart-title">Top 10 konkurencji</h3>
-          <div echarts [options]="eventChartOptions" class="chart-host chart-host--tall"></div>
-        </div>
-
-        <div class="chart-card chart-card--wide" appReveal [revealDelay]="300">
-          <h3 class="chart-title">Najlepszy wynik zawodnika (pkt FINA/WA)</h3>
-          <div echarts [options]="athleteChartOptions" class="chart-host chart-host--tall"></div>
-        </div>
+      <div class="athlete-selector" appReveal>
+        <span class="athlete-selector__label">Zawodnik</span>
+        <p-select
+          [options]="athleteOptions"
+          [(ngModel)]="selectedAthleteKey"
+          optionLabel="label"
+          optionValue="value"
+          (onChange)="onAthleteChange()"
+          styleClass="athlete-select"
+          appendTo="body"
+        ></p-select>
       </div>
+
+      @if (selectedAthlete && athleteStats) {
+        <div class="athlete-header" appReveal [revealDelay]="60">
+          <div class="athlete-header__info">
+            <span class="athlete-header__name"
+              >{{ selectedAthlete.imie }} {{ selectedAthlete.nazwisko }}</span
+            >
+            <span class="athlete-header__meta"
+              >ur. {{ selectedAthlete.rok_urodzenia }} ·
+              {{ selectedAthlete.klub }}</span
+            >
+          </div>
+          <div class="athlete-header__stats">
+            <div class="stat-chip">
+              <span class="stat-chip__value">{{
+                athleteStats.totalStarts
+              }}</span>
+              <span class="stat-chip__label">Startów</span>
+            </div>
+            <div class="stat-chip">
+              <span class="stat-chip__value">{{
+                athleteStats.bestPoints
+              }}</span>
+              <span class="stat-chip__label">Najlepszy wynik</span>
+            </div>
+            <div class="stat-chip">
+              <span class="stat-chip__value">{{
+                athleteStats.competitions
+              }}</span>
+              <span class="stat-chip__label">Zawodów</span>
+            </div>
+            <div class="stat-chip">
+              <span class="stat-chip__value">{{ athleteStats.events }}</span>
+              <span class="stat-chip__label">Konkurencji</span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="chart-card chart-card--progress"
+          appReveal
+          [revealDelay]="120"
+        >
+          <h3 class="chart-title">Progres punktowy — FINA / WA</h3>
+          <p class="chart-subtitle">
+            Wyniki na kolejnych zawodach według konkurencji
+          </p>
+          <div
+            echarts
+            [options]="progressChartOptions"
+            class="chart-host chart-host--progress"
+          ></div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="chart-card" appReveal [revealDelay]="180">
+            <h3 class="chart-title">Najlepszy wynik per konkurencja</h3>
+            <div
+              echarts
+              [options]="eventBestChartOptions"
+              class="chart-host chart-host--tall"
+            ></div>
+          </div>
+          <div class="chart-card" appReveal [revealDelay]="240">
+            <h3 class="chart-title">Starty według stylu</h3>
+            <div echarts [options]="styleChartOptions" class="chart-host"></div>
+          </div>
+        </div>
+
+        <div class="starts-section" appReveal [revealDelay]="300">
+          <h3 class="chart-title">Wszystkie starty</h3>
+          <p-table
+            [value]="athleteStarts"
+            styleClass="results-table"
+            [tableStyle]="{ 'min-width': '580px' }"
+          >
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Zawody</th>
+                <th>Data</th>
+                <th>Basen</th>
+                <th>Konkurencja</th>
+                <th>Czas</th>
+                <th>Punkty</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-s>
+              <tr>
+                <td>
+                  <div class="comp-name">{{ s.zawody }}</div>
+                  <div class="comp-location">{{ s.miejscowosc }}</div>
+                </td>
+                <td class="date-cell">{{ formatDate(s.data) }}</td>
+                <td>{{ s.basen }}</td>
+                <td>{{ s.dystans }} {{ s.styl }}</td>
+                <td class="result-time">{{ formatTime(s.czas) }}</td>
+                <td class="points">{{ s.punkty ?? "—" }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      }
     }
   </div>
 </section>

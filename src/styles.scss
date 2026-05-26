@@ -1,9 +1,9 @@
-@use 'primeicons/primeicons.css';
+@use "primeicons/primeicons.css";
 
 /* ─── Color tokens ─── */
 :root {
-  --color-primary: #F5A623;
-  --color-primary-dark: #C8891A;
+  --color-primary: #f5a623;
+  --color-primary-dark: #c8891a;
   --color-bg: #000000;
   --color-surface: #111111;
   --color-surface-light: #1e1e1e;
@@ -11,21 +11,26 @@
   --color-text-muted: #aaaaaa;
   --color-border: #2a2a2a;
 
-  --font-heading: 'Oswald', sans-serif;
-  --font-body: 'Open Sans', sans-serif;
+  --font-heading: "Oswald", sans-serif;
+  --font-body: "Open Sans", sans-serif;
 
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ─── Reset / Base ─── */
-*, *::before, *::after { box-sizing: border-box; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 html {
   scroll-behavior: smooth;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   background: var(--color-bg);
@@ -37,15 +42,22 @@ html, body {
 }
 
 /* Subtle custom scrollbar */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
 ::-webkit-scrollbar-thumb {
   background: var(--color-primary);
   border-radius: 3px;
   opacity: 0.7;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: var(--font-heading);
   color: var(--color-text);
   margin: 0 0 1rem;
@@ -54,12 +66,46 @@ h1, h2, h3, h4 {
 a {
   color: var(--color-primary);
   text-decoration: none;
-  &:hover { color: var(--color-primary-dark); }
+  &:hover {
+    color: var(--color-primary-dark);
+  }
 }
 
-img { max-width: 100%; height: auto; }
+img {
+  max-width: 100%;
+  height: auto;
+}
 
 /* ─── PrimeNG overrides ─── */
+
+/* athlete-select overlay (appendTo="body" — outside component scope) */
+.p-select-overlay {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+
+  .p-select-list {
+    padding: 0.25rem 0 !important;
+  }
+
+  .p-select-option {
+    color: var(--color-text) !important;
+    font-family: var(--font-body) !important;
+    padding: 0.5rem 0.875rem !important;
+
+    &:hover,
+    &.p-focus {
+      background: var(--color-surface-light) !important;
+      color: var(--color-text) !important;
+    }
+
+    &.p-select-option-selected {
+      background: rgba(245, 166, 35, 0.15) !important;
+      color: var(--color-primary) !important;
+    }
+  }
+}
+
 .p-button {
   background: var(--color-primary) !important;
   border-color: var(--color-primary) !important;
@@ -69,7 +115,11 @@ img { max-width: 100%; height: auto; }
   letter-spacing: 0.08em;
   text-transform: uppercase;
   border-radius: 2px !important;
-  transition: background 0.25s, border-color 0.25s, transform 0.2s, box-shadow 0.25s !important;
+  transition:
+    background 0.25s,
+    border-color 0.25s,
+    transform 0.2s,
+    box-shadow 0.25s !important;
 
   &:hover {
     background: var(--color-primary-dark) !important;
@@ -78,7 +128,9 @@ img { max-width: 100%; height: auto; }
     box-shadow: 0 6px 20px rgba(245, 166, 35, 0.3) !important;
   }
 
-  &:active { transform: translateY(0) !important; }
+  &:active {
+    transform: translateY(0) !important;
+  }
 
   &.p-button-outlined {
     background: transparent !important;
@@ -115,7 +167,7 @@ img { max-width: 100%; height: auto; }
   position: relative;
 
   &::after {
-    content: '';
+    content: "";
     display: block;
     width: 40px;
     height: 2px;
@@ -141,9 +193,10 @@ img { max-width: 100%; height: auto; }
   border: 1px solid var(--color-border);
   border-radius: 8px;
   overflow: hidden;
-  transition: border-color 0.3s var(--ease-out),
-              transform 0.3s var(--ease-out),
-              box-shadow 0.3s var(--ease-out);
+  transition:
+    border-color 0.3s var(--ease-out),
+    transform 0.3s var(--ease-out),
+    box-shadow 0.3s var(--ease-out);
 
   &:hover {
     border-color: var(--color-primary);
@@ -154,41 +207,73 @@ img { max-width: 100%; height: auto; }
 
 /* ─── Animation keyframes ─── */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(28px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeInLeft {
-  from { opacity: 0; transform: translateX(-28px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes fadeInRight {
-  from { opacity: 0; transform: translateX(28px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes shimmerGold {
-  0%   { background-position: -200% center; }
-  100% { background-position: 200% center; }
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 
 @keyframes scrollBounce {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(6px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
 }
 
 @keyframes kenBurns {
-  from { transform: scale(1) translate(0, 0); }
-  to   { transform: scale(1.06) translate(-1%, -1%); }
+  from {
+    transform: scale(1) translate(0, 0);
+  }
+  to {
+    transform: scale(1.06) translate(-1%, -1%);
+  }
 }
 
 /* ─── Scroll reveal ─── */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
-  transition: opacity 0.8s var(--ease-spring),
-              transform 0.8s var(--ease-spring);
+  transition:
+    opacity 0.8s var(--ease-spring),
+    transform 0.8s var(--ease-spring);
 
   &.visible {
     opacity: 1;
@@ -199,31 +284,57 @@ img { max-width: 100%; height: auto; }
 .reveal-left {
   opacity: 0;
   transform: translateX(-36px);
-  transition: opacity 0.8s var(--ease-spring),
-              transform 0.8s var(--ease-spring);
+  transition:
+    opacity 0.8s var(--ease-spring),
+    transform 0.8s var(--ease-spring);
 
-  &.visible { opacity: 1; transform: translateX(0); }
+  &.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .reveal-right {
   opacity: 0;
   transform: translateX(36px);
-  transition: opacity 0.8s var(--ease-spring),
-              transform 0.8s var(--ease-spring);
+  transition:
+    opacity 0.8s var(--ease-spring),
+    transform 0.8s var(--ease-spring);
 
-  &.visible { opacity: 1; transform: translateX(0); }
+  &.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.delay-1 { transition-delay: 0.08s; }
-.delay-2 { transition-delay: 0.16s; }
-.delay-3 { transition-delay: 0.24s; }
-.delay-4 { transition-delay: 0.32s; }
-.delay-5 { transition-delay: 0.40s; }
-.delay-6 { transition-delay: 0.48s; }
+.delay-1 {
+  transition-delay: 0.08s;
+}
+.delay-2 {
+  transition-delay: 0.16s;
+}
+.delay-3 {
+  transition-delay: 0.24s;
+}
+.delay-4 {
+  transition-delay: 0.32s;
+}
+.delay-5 {
+  transition-delay: 0.4s;
+}
+.delay-6 {
+  transition-delay: 0.48s;
+}
 
 /* ─── Gradient text ─── */
 .text-gold {
-  background: linear-gradient(120deg, #FFD77A 0%, #F5A623 40%, #C8891A 70%, #F5A623 100%);
+  background: linear-gradient(
+    120deg,
+    #ffd77a 0%,
+    #f5a623 40%,
+    #c8891a 70%,
+    #f5a623 100%
+  );
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
