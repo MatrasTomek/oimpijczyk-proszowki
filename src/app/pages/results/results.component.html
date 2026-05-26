@@ -7,14 +7,11 @@
 
 <section class="section">
   <div class="container">
-    <h2 class="section-title">Ostatnie wyniki</h2>
-    <p class="section-subtitle">Osiągnięcia naszych zawodników na zawodach</p>
+    <h2 class="section-title">Najlepsze wyniki ostatnich zawodów</h2>
+    <p class="section-subtitle">Najwyżej punktowany start każdego zawodnika z ostatnich zawodów</p>
 
     <p-table
-      [value]="results"
-      [paginator]="true"
-      [rows]="10"
-      [rowsPerPageOptions]="[10, 25, 50]"
+      [value]="bestResults"
       styleClass="results-table"
       [tableStyle]="{ 'min-width': '700px' }"
     >
@@ -22,25 +19,26 @@
         <tr>
           <th>Zawodnik</th>
           <th>Zawody</th>
-          <th>Dyscyplina</th>
-          <th>Wynik</th>
-          <th>Miejsce</th>
-          <th>Data</th>
+          <th>Konkurencja</th>
+          <th>Basen</th>
+          <th>Czas</th>
+          <th>Punkty</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-r>
         <tr>
-          <td class="athlete-name">{{ r.athlete }}</td>
-          <td class="comp-name">{{ r.competition }}</td>
-          <td>{{ r.discipline }}</td>
-          <td class="result-time">{{ r.result }}</td>
           <td>
-            <p-tag
-              [value]="medalLabel(r.place)"
-              [severity]="medalColor(r.place)"
-            />
+            <div class="athlete-name">{{ r.zawodnik }}</div>
+            <div class="athlete-year">ur. {{ r.rok_urodzenia }}</div>
           </td>
-          <td>{{ r.date | date: "d MMM yyyy" : "" : "pl" }}</td>
+          <td>
+            <div class="comp-name">{{ r.zawody }}</div>
+            <div class="comp-location">{{ r.miejscowosc }}</div>
+          </td>
+          <td>{{ r.dystans }} {{ r.styl }}</td>
+          <td>{{ r.basen }}</td>
+          <td class="result-time">{{ r.czas }}</td>
+          <td class="points">{{ r.punkty }}</td>
         </tr>
       </ng-template>
     </p-table>

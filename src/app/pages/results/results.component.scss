@@ -23,5 +23,8 @@
 }
 
 .athlete-name { font-weight: 600; color: #fff !important; }
+.athlete-year { font-size: 0.75rem; color: var(--color-text-muted) !important; font-weight: 400; }
 .comp-name { font-size: 0.85rem; color: var(--color-text-muted) !important; }
+.comp-location { font-size: 0.75rem; color: var(--color-text-muted) !important; }
 .result-time { font-family: var(--font-heading); font-size: 1.1rem; color: var(--color-primary) !important; }
+.points { font-family: var(--font-heading); font-size: 1.1rem; color: var(--color-primary) !important; font-weight: 700; }
