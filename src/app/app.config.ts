@@ -8,6 +8,7 @@ import { definePreset } from '@primeuix/themes';
 import Lara from '@primeuix/themes/lara';
 import { registerLocaleData } from '@angular/common';
 import localePl from '@angular/common/locales/pl';
+import { provideEchartsCore } from 'ngx-echarts';
 
 registerLocaleData(localePl);
 
@@ -59,6 +60,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     providePrimeNG({
       theme: { preset: OlimpijczykTheme, options: { darkModeSelector: 'body', cssLayer: false } }
-    })
+    }),
+    provideEchartsCore({ echarts: () => import('echarts') }),
   ]
 };

@@ -42,6 +42,12 @@ export interface BestResult {
   punkty: number;
 }
 
+export interface StartWithAthlete {
+  athlete: string;
+  rok_urodzenia: number;
+  start: Start;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AthletesService {
   private http = inject(HttpClient);
@@ -86,6 +92,24 @@ export class AthletesService {
         }
 
         return results.sort((a, b) => b.punkty - a.punkty);
+      }),
+    );
+  }
+
+  getAllStartsWithPoints(): Observable<StartWithAthlete[]> {
+    return this.http.get<AthletesData>(this.dataUrl).pipe(
+      map((data) => {
+        const results: StartWithAthlete[] = [];
+        for (const key of Object.keys(data)) {
+          const z = data[key];
+          const name = `${z.imie} ${z.nazwisko}`;
+          for (const start of z.starty) {
+            if (start.punkty !== null) {
+              results.push({ athlete: name, rok_urodzenia: z.rok_urodzenia, start });
+            }
+          }
+        }
+        return results;
       }),
     );
   }

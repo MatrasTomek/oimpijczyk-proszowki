@@ -44,3 +44,38 @@
     </p-table>
   </div>
 </section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Analiza wyników</h2>
+    <p class="section-subtitle">Wszystkie starty z punktacją FINA/WA ze wszystkich zawodów</p>
+
+    @if (analysisLoading) {
+      <div class="analysis-loading">
+        <i class="pi pi-spin pi-spinner" style="font-size:2rem;color:var(--color-primary)"></i>
+      </div>
+    } @else {
+      <div class="charts-grid">
+        <div class="chart-card" appReveal>
+          <h3 class="chart-title">Starty według basenu</h3>
+          <div echarts [options]="poolChartOptions" class="chart-host"></div>
+        </div>
+
+        <div class="chart-card" appReveal [revealDelay]="100">
+          <h3 class="chart-title">Starty według stylu</h3>
+          <div echarts [options]="styleChartOptions" class="chart-host"></div>
+        </div>
+
+        <div class="chart-card chart-card--wide" appReveal [revealDelay]="200">
+          <h3 class="chart-title">Top 10 konkurencji</h3>
+          <div echarts [options]="eventChartOptions" class="chart-host chart-host--tall"></div>
+        </div>
+
+        <div class="chart-card chart-card--wide" appReveal [revealDelay]="300">
+          <h3 class="chart-title">Najlepszy wynik zawodnika (pkt FINA/WA)</h3>
+          <div echarts [options]="athleteChartOptions" class="chart-host chart-host--tall"></div>
+        </div>
+      </div>
+    }
+  </div>
+</section>
