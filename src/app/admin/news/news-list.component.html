@@ -54,9 +54,25 @@
       <label>Data publikacji</label>
       <input pInputText type="date" [(ngModel)]="editItem.published_at" class="w-full" />
     </div>
+
+    <div class="field">
+      <label>Zdjęcie <span class="optional">(opcjonalne)</span></label>
+      @if (imagePreview) {
+        <div class="image-preview">
+          <img [src]="imagePreview" alt="Podgląd zdjęcia" />
+          <button pButton icon="pi pi-times" class="p-button-sm p-button-outlined p-button-danger remove-img-btn" title="Usuń zdjęcie" (click)="removeImage()"></button>
+        </div>
+      } @else {
+        <label class="upload-area">
+          <i class="pi pi-image"></i>
+          <span>Kliknij, aby wybrać zdjęcie</span>
+          <input type="file" accept="image/*" (change)="onFileSelect($event)" style="display:none" />
+        </label>
+      }
+    </div>
   </div>
   <ng-template pTemplate="footer">
     <button pButton label="Anuluj" class="p-button-outlined" (click)="dialogVisible = false"></button>
-    <button pButton label="Zapisz" class="p-button" (click)="save()"></button>
+    <button pButton [label]="isUploading ? 'Przesyłanie...' : 'Zapisz'" class="p-button" [disabled]="isUploading" (click)="save()"></button>
   </ng-template>
 </p-dialog>
