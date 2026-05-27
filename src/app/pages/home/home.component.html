@@ -82,7 +82,10 @@
     <div class="news-grid">
       <!-- Featured article -->
       <a class="card-dark news-card news-card--featured" appReveal [revealDelay]="0"
-         [routerLink]="categoryRoute(latestNews[0].category)">
+         [routerLink]="['/aktualnosci', latestNews[0].id]">
+        <div class="news-card-image" *ngIf="latestNews[0].image_path"
+             [style.backgroundImage]="'url(' + newsImageUrl(latestNews[0].image_path) + ')'">
+        </div>
         <div class="news-card-body">
           <p-tag [value]="latestNews[0].category" severity="warn" class="news-tag" />
           <h3 class="news-title">{{ latestNews[0].title }}</h3>
@@ -98,7 +101,10 @@
       <div class="news-secondary">
         <a class="card-dark news-card" *ngFor="let item of latestNews.slice(1); let i = index"
            appReveal [revealDelay]="(i + 1) * 100"
-           [routerLink]="categoryRoute(item.category)">
+           [routerLink]="['/aktualnosci', item.id]">
+          <div class="news-card-image news-card-image--small" *ngIf="item.image_path"
+               [style.backgroundImage]="'url(' + newsImageUrl(item.image_path) + ')'">
+          </div>
           <div class="news-card-body">
             <p-tag [value]="item.category" severity="warn" class="news-tag" />
             <h3 class="news-title">{{ item.title }}</h3>

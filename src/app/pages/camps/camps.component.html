@@ -46,7 +46,7 @@
       <div class="past-camp-item" *ngFor="let camp of pastCamps">
         <div class="past-camp-info">
           <div class="camp-image-placeholder">
-            <img src="{{ camp.image }}" alt="{{ camp.name }}" />
+            <img *ngIf="camp.image" [src]="camp.image" [alt]="camp.name" />
           </div>
           <span class="past-camp-name">{{ camp.name }}</span>
           <span class="past-camp-meta">

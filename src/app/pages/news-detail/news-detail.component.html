@@ -1,0 +1,37 @@
+<div class="page-hero">
+  <div class="container">
+    <h1 class="page-title">Aktualności</h1>
+    <p class="page-breadcrumb">Start / Aktualności</p>
+  </div>
+</div>
+
+<section class="section news-detail-section">
+  <div class="container news-detail-container">
+    <a routerLink="/" class="back-link">
+      <i class="pi pi-arrow-left"></i> Powrót do strony głównej
+    </a>
+
+    <ng-container *ngIf="news; else loading">
+      <div class="news-detail-header">
+        <p-tag [value]="news.category" severity="warn" />
+        <h2 class="news-detail-title">{{ news.title }}</h2>
+        <span class="news-detail-date">{{ news.published_at | date:'d MMMM yyyy':'':'pl' }}</span>
+      </div>
+
+      <div class="news-detail-image-wrap" *ngIf="news.image_path">
+        <img [src]="imageUrl(news.image_path)" [alt]="news.title" class="news-detail-image" />
+      </div>
+
+      <div class="news-detail-body" [innerHTML]="news.content || news.excerpt"></div>
+    </ng-container>
+
+    <ng-template #loading>
+      <ng-container *ngIf="!error; else errBlock">
+        <p class="loading-text">Ładowanie...</p>
+      </ng-container>
+      <ng-template #errBlock>
+        <p class="error-text">Nie udało się załadować aktualności.</p>
+      </ng-template>
+    </ng-template>
+  </div>
+</section>

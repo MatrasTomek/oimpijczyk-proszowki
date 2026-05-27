@@ -373,6 +373,17 @@
   }
 }
 
+.news-card-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 0;
+
+  &--small {
+    height: 130px;
+  }
+}
+
 .news-card-body {
   padding: 1.5rem 1.75rem;
   height: 100%;

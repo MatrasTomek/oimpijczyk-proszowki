@@ -165,13 +165,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     return path ? `url(${path})` : '';
   }
 
-  categoryRoute(category: string): string {
-    const map: Record<string, string> = {
-      Wyniki: '/wyniki',
-      Obozy: '/obozy',
-      Treningi: '/treningi',
-    };
-    return map[category] ?? '/';
+  newsImageUrl(path: string): string {
+    return `${environment.apiUrl}/${path}`;
   }
 
   nextCamp = {
