@@ -10,8 +10,18 @@
       Licencjonowani zawodnicy na arenach całej Polski
     </p>
     <div class="hero-actions">
-      <a routerLink="/treningi" pButton label="Nasze treningi" class="p-button"></a>
-      <a routerLink="/o-nas" pButton label="Poznaj nas" class="p-button p-button-outlined"></a>
+      <a
+        routerLink="/treningi"
+        pButton
+        label="Nasze treningi"
+        class="p-button"
+      ></a>
+      <a
+        routerLink="/o-nas"
+        pButton
+        label="Poznaj nas"
+        class="p-button p-button-outlined"
+      ></a>
     </div>
   </div>
   <picture class="hero-photo">
@@ -30,7 +40,12 @@
 <!-- ─── Stats ─── -->
 <section class="stats-section">
   <div class="container stats-grid">
-    <div class="stat-item" *ngFor="let stat of stats; let i = index" appReveal [revealDelay]="i * 80">
+    <div
+      class="stat-item"
+      *ngFor="let stat of stats; let i = index"
+      appReveal
+      [revealDelay]="i * 80"
+    >
       <span class="stat-value">{{ displayStats[i] }}</span>
       <span class="stat-label">{{ stat.label }}</span>
     </div>
@@ -43,12 +58,17 @@
     <div appReveal>
       <h2 class="section-title">Gdzie nas można spotkać</h2>
       <p class="section-subtitle">
-        Aktywni przez cały rok — na zawodach, obozach i wydarzeniach w całej Polsce
+        Aktywni przez cały rok — na zawodach, obozach i wydarzeniach w całej
+        Polsce
       </p>
     </div>
     <div class="presence-grid">
-      <div class="presence-card" *ngFor="let item of presenceItems; let i = index"
-           appReveal [revealDelay]="(i % 2) * 120">
+      <div
+        class="presence-card"
+        *ngFor="let item of presenceItems; let i = index"
+        appReveal
+        [revealDelay]="(i % 2) * 120"
+      >
         <div
           class="presence-card-image"
           [class.no-image]="!item.image"
@@ -81,36 +101,65 @@
     </div>
     <div class="news-grid">
       <!-- Featured article -->
-      <a class="card-dark news-card news-card--featured" appReveal [revealDelay]="0"
-         [routerLink]="['/aktualnosci', latestNews[0].id]">
-        <div class="news-card-image" *ngIf="latestNews[0].image_path"
-             [style.backgroundImage]="'url(' + newsImageUrl(latestNews[0].image_path) + ')'">
-        </div>
+      <a
+        class="card-dark news-card news-card--featured"
+        appReveal
+        [revealDelay]="0"
+        [routerLink]="['/aktualnosci', latestNews[0].id]"
+      >
+        <div
+          class="news-card-image"
+          *ngIf="latestNews[0].image_path"
+          [style.backgroundImage]="
+            'url(' + newsImageUrl(latestNews[0].image_path) + ')'
+          "
+        ></div>
         <div class="news-card-body">
-          <p-tag [value]="latestNews[0].category" severity="warn" class="news-tag" />
+          <p-tag
+            [value]="latestNews[0].category"
+            severity="warn"
+            class="news-tag"
+          />
           <h3 class="news-title">{{ latestNews[0].title }}</h3>
           <p class="news-excerpt">{{ latestNews[0].excerpt }}</p>
           <div class="news-footer">
-            <span class="news-date">{{ latestNews[0].published_at | date:'d MMMM yyyy':'':'pl' }}</span>
-            <span class="news-read-more">Czytaj więcej <i class="pi pi-arrow-right"></i></span>
+            <span class="news-date">{{
+              latestNews[0].published_at | date: "d MMMM yyyy" : "" : "pl"
+            }}</span>
+            <span class="news-read-more"
+              >Czytaj więcej <i class="pi pi-arrow-right"></i
+            ></span>
           </div>
         </div>
       </a>
 
       <!-- Secondary articles -->
       <div class="news-secondary">
-        <a class="card-dark news-card" *ngFor="let item of latestNews.slice(1); let i = index"
-           appReveal [revealDelay]="(i + 1) * 100"
-           [routerLink]="['/aktualnosci', item.id]">
-          <div class="news-card-image news-card-image--small" *ngIf="item.image_path"
-               [style.backgroundImage]="'url(' + newsImageUrl(item.image_path) + ')'">
-          </div>
+        <a
+          class="card-dark news-card"
+          *ngFor="let item of latestNews.slice(1); let i = index"
+          appReveal
+          [revealDelay]="(i + 1) * 100"
+          [routerLink]="['/aktualnosci', item.id]"
+        >
+          <div
+            class="news-card-image news-card-image--small"
+            *ngIf="item.image_path"
+            [style.backgroundImage]="
+              'url(' + newsImageUrl(item.image_path) + ')'
+            "
+          ></div>
           <div class="news-card-body">
             <p-tag [value]="item.category" severity="warn" class="news-tag" />
             <h3 class="news-title">{{ item.title }}</h3>
             <p class="news-excerpt">{{ item.excerpt }}</p>
             <div class="news-footer">
-              <span class="news-date">{{ item.published_at | date:'d MMMM yyyy':'':'pl' }}</span>
+              <span class="news-date">{{
+                item.published_at | date: "d MMMM yyyy" : "" : "pl"
+              }}</span>
+              <span class="news-read-more"
+                >Czytaj więcej <i class="pi pi-arrow-right"></i
+              ></span>
             </div>
           </div>
         </a>
@@ -125,25 +174,36 @@
     <div class="about-text" appReveal revealDir="left">
       <h2 class="section-title title-left">O naszym klubie</h2>
       <p>
-        Stowarzyszenie Olimpijczyk Proszówki to prężnie działający klub pływacki,
-        który od ponad 5 lat kształtuje sportowe talenty i wychowuje licencjonowanych
-        zawodników. Startujemy w zawodach na terenie całej Polski, reprezentując nasze
-        barwy na dziesiątkach imprez każdego roku.
+        Stowarzyszenie Olimpijczyk Proszówki to prężnie działający klub
+        pływacki, który od ponad 5 lat kształtuje sportowe talenty i wychowuje
+        licencjonowanych zawodników. Startujemy w zawodach na terenie całej
+        Polski, reprezentując nasze barwy na dziesiątkach imprez każdego roku.
       </p>
       <p>
-        Posiadamy wykwalifikowaną kadrę trenerską i systematyczny program szkolenia —
-        nasi zawodnicy regularnie stają na podium Mistrzostw Małopolski i zawodów
-        rangi krajowej, budując rozpoznawalność klubu w całym środowisku pływackim.
+        Posiadamy wykwalifikowaną kadrę trenerską i systematyczny program
+        szkolenia — nasi zawodnicy regularnie stają na podium Mistrzostw
+        Małopolski i zawodów rangi krajowej, budując rozpoznawalność klubu w
+        całym środowisku pływackim.
       </p>
-      <a routerLink="/o-nas" pButton label="Dowiedz się więcej" class="p-button"
-         style="margin-top: 1.5rem"></a>
+      <a
+        routerLink="/o-nas"
+        pButton
+        label="Dowiedz się więcej"
+        class="p-button"
+        style="margin-top: 1.5rem"
+      ></a>
     </div>
     <div class="about-visual" appReveal revealDir="right">
       <div class="visual-placeholder">
         <img
           src="assets/all-start.jpeg"
           alt="Zdjęcie klubu"
-          style="width:100%;height:100%;object-fit:cover;border-radius:8px;"
+          style="
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+          "
         />
       </div>
     </div>
