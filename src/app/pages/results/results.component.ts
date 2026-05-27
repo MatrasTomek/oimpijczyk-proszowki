@@ -133,6 +133,17 @@ export class ResultsComponent implements OnInit {
     return `${d[2]}.${d[1]}.${d[0]}`;
   }
 
+  private competitionDateSortKey(dateStr: string, fallbackTs: string): string {
+    if (dateStr) {
+      const parts = dateStr.split('/');
+      if (parts.length === 3) {
+        const [d, m, y] = parts;
+        return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+      }
+    }
+    return fallbackTs.slice(0, 10);
+  }
+
   private refreshAnalysis(): void {
     if (!this.athletesData || !this.selectedAthleteKey) return;
     const athlete = this.athletesData[this.selectedAthleteKey];
@@ -156,7 +167,9 @@ export class ResultsComponent implements OnInit {
     };
 
     this.athleteStarts = [...athlete.starty].sort((a, b) =>
-      a.timestamp_pobrania.localeCompare(b.timestamp_pobrania),
+      this.competitionDateSortKey(a.data, a.timestamp_pobrania).localeCompare(
+        this.competitionDateSortKey(b.data, b.timestamp_pobrania),
+      ),
     );
 
     this.buildProgressChart(athlete);
@@ -168,21 +181,25 @@ export class ResultsComponent implements OnInit {
     // Group starts by competition batch (timestamp_pobrania)
     const compBatches = new Map<
       string,
-      { zawody: string; location: string; starts: Start[] }
+      { zawody: string; location: string; data: string; starts: Start[] }
     >();
     for (const s of athlete.starty) {
       if (!compBatches.has(s.timestamp_pobrania)) {
         compBatches.set(s.timestamp_pobrania, {
           zawody: s.zawody,
           location: s.miejscowosc,
+          data: s.data,
           starts: [],
         });
       }
       compBatches.get(s.timestamp_pobrania)!.starts.push(s);
     }
 
-    const sortedBatches = Array.from(compBatches.entries()).sort(([a], [b]) =>
-      a.localeCompare(b),
+    const sortedBatches = Array.from(compBatches.entries()).sort(
+      ([tsA, bA], [tsB, bB]) =>
+        this.competitionDateSortKey(bA.data, tsA).localeCompare(
+          this.competitionDateSortKey(bB.data, tsB),
+        ),
     );
 
     const xLabels = sortedBatches.map(([, g]) =>
@@ -230,7 +247,8 @@ export class ResultsComponent implements OnInit {
       .filter((s) => s !== null);
 
     const formatTime = (t: string) => this.formatTime(t);
-    const tsToDate = (ts: string) => this.tsToDate(ts);
+    const formatDate = (d: string, ts: string) =>
+      d ? this.formatDate(d) : this.tsToDate(ts);
 
     this.progressChartOptions = {
       backgroundColor: 'transparent',
@@ -242,7 +260,7 @@ export class ResultsComponent implements OnInit {
           const idx = params[0]?.dataIndex;
           const [ts, batch] = sortedBatches[idx] ?? [];
           if (!batch) return '';
-          const heading = `${batch.zawody}, ${batch.location} <span style="color:#666">(${tsToDate(ts)})</span>`;
+          const heading = `${batch.zawody}, ${batch.location} <span style="color:#666">(${formatDate(batch.data, ts)})</span>`;
           let rows = '';
           for (const p of params) {
             if (p.data === null || p.data === undefined) continue;

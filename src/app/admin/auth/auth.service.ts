@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 const TOKEN_KEY = 'admin_token';
 
@@ -12,7 +13,7 @@ export class AuthService {
 
   login(username: string, password: string): Observable<{ token: string }> {
     return this.http
-      .post<{ token: string }>('/api/auth/login.php', { username, password })
+      .post<{ token: string }>(`${environment.apiUrl}/api/auth/login.php`, { username, password })
       .pipe(tap(res => localStorage.setItem(TOKEN_KEY, res.token)));
   }
 
