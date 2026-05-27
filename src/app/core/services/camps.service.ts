@@ -38,10 +38,28 @@ export class CampsService {
   }
 
   update(id: number, data: Partial<Camp>): Observable<{ updated: boolean }> {
-    return this.http.put<{ updated: boolean }>(`${this.base}/item.php?id=${id}`, data);
+    return this.http.put<{ updated: boolean }>(
+      `${this.base}/item.php?id=${id}`,
+      data,
+    );
   }
 
   delete(id: number): Observable<{ deleted: boolean }> {
-    return this.http.delete<{ deleted: boolean }>(`${this.base}/item.php?id=${id}`);
+    return this.http.delete<{ deleted: boolean }>(
+      `${this.base}/item.php?id=${id}`,
+    );
+  }
+
+  uploadImage(file: File): Observable<{ filename: string; path: string }> {
+    const fd = new FormData();
+    fd.append('file', file);
+    return this.http.post<{ filename: string; path: string }>(
+      `${this.base}/upload.php`,
+      fd,
+    );
+  }
+
+  imageUrl(path: string): string {
+    return `${environment.apiUrl}/${path}`;
   }
 }

@@ -11,6 +11,9 @@
 
     <div class="camps-grid" *ngIf="upcomingCamps.length; else noCamps">
       <div class="camp-card card-dark" *ngFor="let camp of upcomingCamps">
+        <div class="camp-image-placeholder" *ngIf="camp.image">
+          <img [src]="camp.image" [alt]="camp.name" />
+        </div>
         <div class="camp-body">
           <div class="camp-top">
             <h3 class="camp-name">{{ camp.name }}</h3>
@@ -45,8 +48,8 @@
     <div class="past-camps-list">
       <div class="past-camp-item" *ngFor="let camp of pastCamps">
         <div class="past-camp-info">
-          <div class="camp-image-placeholder">
-            <img *ngIf="camp.image" [src]="camp.image" [alt]="camp.name" />
+          <div class="camp-image-placeholder" *ngIf="camp.image">
+            <img [src]="camp.image" [alt]="camp.name" />
           </div>
           <span class="past-camp-name">{{ camp.name }}</span>
           <span class="past-camp-meta">
