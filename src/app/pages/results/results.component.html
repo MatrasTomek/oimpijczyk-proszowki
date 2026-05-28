@@ -9,7 +9,7 @@
   <div class="container">
     <h2 class="section-title">Najlepsze wyniki ostatnich zawodów</h2>
     <p class="section-subtitle">
-      Wszystkie starty każdego zawodnika z jego ostatnich zawodów
+      Najlepszy start każdego zawodnika z jego ostatnich zawodów
     </p>
 
     <p-table
@@ -42,7 +42,7 @@
           <td>{{ r.dystans }} {{ r.styl }}</td>
           <td>{{ r.basen }}</td>
           <td class="result-time">{{ formatTime(r.czas) }}</td>
-          <td class="points">{{ r.punkty ?? '—' }}</td>
+          <td class="points">{{ r.punkty ?? "—" }}</td>
         </tr>
       </ng-template>
     </p-table>
