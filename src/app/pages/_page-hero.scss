@@ -5,11 +5,19 @@
   position: relative;
   overflow: hidden;
 
+  @media (max-width: 768px) {
+    padding: 5.5rem 0 2rem;
+  }
+
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 60% 80% at 10% 50%, rgba(245, 166, 35, 0.06) 0%, transparent 60%);
+    background: radial-gradient(
+      ellipse 60% 80% at 10% 50%,
+      rgba(245, 166, 35, 0.06) 0%,
+      transparent 60%
+    );
     pointer-events: none;
   }
 
@@ -23,7 +31,7 @@
     position: relative;
 
     &::after {
-      content: '';
+      content: "";
       display: block;
       width: 40px;
       height: 2px;

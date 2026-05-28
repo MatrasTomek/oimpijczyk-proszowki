@@ -12,40 +12,42 @@
       Najlepszy start każdego zawodnika z jego ostatnich zawodów
     </p>
 
-    <p-table
-      [value]="lastCompResults"
-      styleClass="results-table"
-      [tableStyle]="{ 'min-width': '780px' }"
-    >
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Zawodnik</th>
-          <th>Zawody</th>
-          <th>Data</th>
-          <th>Konkurencja</th>
-          <th>Basen</th>
-          <th>Czas</th>
-          <th>Punkty</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-r>
-        <tr>
-          <td>
-            <div class="athlete-name">{{ r.zawodnik }}</div>
-            <div class="athlete-year">ur. {{ r.rok_urodzenia }}</div>
-          </td>
-          <td>
-            <div class="comp-name">{{ r.zawody }}</div>
-            <div class="comp-location">{{ r.miejscowosc }}</div>
-          </td>
-          <td class="date-cell">{{ formatDate(r.data) }}</td>
-          <td>{{ r.dystans }} {{ r.styl }}</td>
-          <td>{{ r.basen }}</td>
-          <td class="result-time">{{ formatTime(r.czas) }}</td>
-          <td class="points">{{ r.punkty ?? "—" }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
+    <div class="table-scroll">
+      <p-table
+        [value]="lastCompResults"
+        styleClass="results-table"
+        [tableStyle]="{ 'min-width': '780px' }"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Zawodnik</th>
+            <th>Zawody</th>
+            <th>Data</th>
+            <th>Konkurencja</th>
+            <th>Basen</th>
+            <th>Czas</th>
+            <th>Punkty</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-r>
+          <tr>
+            <td>
+              <div class="athlete-name">{{ r.zawodnik }}</div>
+              <div class="athlete-year">ur. {{ r.rok_urodzenia }}</div>
+            </td>
+            <td>
+              <div class="comp-name">{{ r.zawody }}</div>
+              <div class="comp-location">{{ r.miejscowosc }}</div>
+            </td>
+            <td class="date-cell">{{ formatDate(r.data) }}</td>
+            <td>{{ r.dystans }} {{ r.styl }}</td>
+            <td>{{ r.basen }}</td>
+            <td class="result-time">{{ formatTime(r.czas) }}</td>
+            <td class="points">{{ r.punkty ?? "—" }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
   </div>
 </section>
 
@@ -147,35 +149,37 @@
 
         <div class="starts-section" appReveal [revealDelay]="300">
           <h3 class="chart-title">Wszystkie starty</h3>
-          <p-table
-            [value]="athleteStarts"
-            styleClass="results-table"
-            [tableStyle]="{ 'min-width': '580px' }"
-          >
-            <ng-template pTemplate="header">
-              <tr>
-                <th>Zawody</th>
-                <th>Data</th>
-                <th>Basen</th>
-                <th>Konkurencja</th>
-                <th>Czas</th>
-                <th>Punkty</th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-s>
-              <tr>
-                <td>
-                  <div class="comp-name">{{ s.zawody }}</div>
-                  <div class="comp-location">{{ s.miejscowosc }}</div>
-                </td>
-                <td class="date-cell">{{ formatDate(s.data) }}</td>
-                <td>{{ s.basen }}</td>
-                <td>{{ s.dystans }} {{ s.styl }}</td>
-                <td class="result-time">{{ formatTime(s.czas) }}</td>
-                <td class="points">{{ s.punkty ?? "—" }}</td>
-              </tr>
-            </ng-template>
-          </p-table>
+          <div class="table-scroll">
+            <p-table
+              [value]="athleteStarts"
+              styleClass="results-table"
+              [tableStyle]="{ 'min-width': '580px' }"
+            >
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>Zawody</th>
+                  <th>Data</th>
+                  <th>Basen</th>
+                  <th>Konkurencja</th>
+                  <th>Czas</th>
+                  <th>Punkty</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-s>
+                <tr>
+                  <td>
+                    <div class="comp-name">{{ s.zawody }}</div>
+                    <div class="comp-location">{{ s.miejscowosc }}</div>
+                  </td>
+                  <td class="date-cell">{{ formatDate(s.data) }}</td>
+                  <td>{{ s.basen }}</td>
+                  <td>{{ s.dystans }} {{ s.styl }}</td>
+                  <td class="result-time">{{ formatTime(s.czas) }}</td>
+                  <td class="points">{{ s.punkty ?? "—" }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
         </div>
       }
     }

@@ -1,5 +1,10 @@
 @use "../page-hero";
 
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 // ─── Best results table ───────────────────────────────
 :host ::ng-deep .results-table {
   .p-datatable-thead th {
