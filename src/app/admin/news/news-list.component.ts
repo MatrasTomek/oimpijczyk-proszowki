@@ -9,6 +9,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { SelectModule } from 'primeng/select';
 import { NewsService, NewsItem } from '../../core/services/news.service';
 
 @Component({
@@ -24,6 +25,7 @@ import { NewsService, NewsItem } from '../../core/services/news.service';
     TextareaModule,
     ConfirmDialogModule,
     ToastModule,
+    SelectModule,
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './news-list.component.html',
@@ -39,6 +41,8 @@ export class NewsListComponent implements OnInit {
   dialogVisible = false;
   editItem: Partial<NewsItem> = {};
   isNew = false;
+
+  categories = ['Ogólne', 'Obóz', 'Trening', 'Wyniki'];
 
   selectedFile: File | null = null;
   imagePreview: string | null = null;

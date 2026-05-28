@@ -105,7 +105,7 @@
         class="card-dark news-card news-card--featured"
         appReveal
         [revealDelay]="0"
-        [routerLink]="['/aktualnosci', latestNews[0].id]"
+        [routerLink]="newsLink(latestNews[0])"
       >
         <div
           class="news-card-image"
@@ -140,7 +140,7 @@
           *ngFor="let item of latestNews.slice(1); let i = index"
           appReveal
           [revealDelay]="(i + 1) * 100"
-          [routerLink]="['/aktualnosci', item.id]"
+          [routerLink]="newsLink(item)"
         >
           <div
             class="news-card-image news-card-image--small"

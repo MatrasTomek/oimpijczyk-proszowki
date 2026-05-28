@@ -121,7 +121,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         'Zimowy obóz szkoleniowy w Szczyrku przyniósł wiele cennych doświadczeń naszym zawodnikom.',
       content: '',
       published_at: '2026-02-10',
-      category: 'Obozy',
+      category: 'Obóz',
       image_path: null,
     },
     {
@@ -131,7 +131,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         'Od maja 2026 wprowadzamy nowy harmonogram treningów. Sprawdź aktualny plan dla swojej grupy.',
       content: '',
       published_at: '2026-04-01',
-      category: 'Treningi',
+      category: 'Trening',
       image_path: null,
     },
   ];
@@ -167,6 +167,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   newsImageUrl(path: string): string {
     return `${environment.apiUrl}/${path}`;
+  }
+
+  newsLink(item: NewsItem): any[] {
+    switch (item.category) {
+      case 'Trening': return ['/treningi'];
+      case 'Obóz':    return ['/obozy'];
+      case 'Wyniki':  return ['/wyniki'];
+      default:        return ['/aktualnosci', item.id];
+    }
   }
 
   nextCamp = {

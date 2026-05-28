@@ -40,7 +40,13 @@
     </div>
     <div class="field">
       <label>Kategoria</label>
-      <input pInputText [(ngModel)]="editItem.category" class="w-full" />
+      <p-select
+        [(ngModel)]="editItem.category"
+        [options]="categories"
+        placeholder="Wybierz kategorię"
+        class="w-full"
+        styleClass="w-full"
+      ></p-select>
     </div>
     <div class="field">
       <label>Skrót (excerpt)</label>
