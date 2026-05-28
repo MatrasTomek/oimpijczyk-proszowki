@@ -5,7 +5,7 @@ import { TableModule } from 'primeng/table';
 import { SelectModule } from 'primeng/select';
 import {
   AthletesService,
-  BestResult,
+  LastCompetitionResult,
   Athlete,
   AthletesData,
   Start,
@@ -72,7 +72,7 @@ const AXIS_LABEL_BASE = {
 export class ResultsComponent implements OnInit {
   private athletesService = inject(AthletesService);
 
-  bestResults: BestResult[] = [];
+  lastCompResults: LastCompetitionResult[] = [];
 
   athleteOptions: AthleteOption[] = [];
   selectedAthleteKey = '';
@@ -88,8 +88,8 @@ export class ResultsComponent implements OnInit {
   styleChartOptions: EChartsOption = {};
 
   ngOnInit(): void {
-    this.athletesService.getBestResultsFromLastCompetition().subscribe({
-      next: (data) => (this.bestResults = data),
+    this.athletesService.getLastCompetitionResults().subscribe({
+      next: (data) => (this.lastCompResults = data),
       error: () => {},
     });
 
