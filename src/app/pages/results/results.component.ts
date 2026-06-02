@@ -125,15 +125,15 @@ export class ResultsComponent implements OnInit {
 
   formatTime(timeStr: string): string {
     if (!timeStr) return '—';
+    if (!/[:.]/.test(timeStr) && /^\d+$/.test(timeStr)) return '?';
     return timeStr.replace(/^00:00:/, '').replace(/^00:0?/, '');
   }
 
-  private tsToDate(ts: string): string {
-    const d = ts.slice(0, 10).split('-');
-    return `${d[2]}.${d[1]}.${d[0]}`;
+  private normalizeStyl(styl: string): string {
+    return styl.replace(/\s+Lap$/i, '').trim();
   }
 
-  private competitionDateSortKey(dateStr: string, fallbackTs: string): string {
+  private competitionDateSortKey(dateStr: string): string {
     if (dateStr) {
       const parts = dateStr.split('/');
       if (parts.length === 3) {
@@ -141,7 +141,13 @@ export class ResultsComponent implements OnInit {
         return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
       }
     }
-    return fallbackTs.slice(0, 10);
+    return '0000-00-00';
+  }
+
+  private batchKey(s: { zawody: string; data: string }): string {
+    const parts = s.data.split('/');
+    const monthYear = parts.length === 3 ? `${parts[1]}/${parts[2]}` : '';
+    return `${s.zawody}|${monthYear}`;
   }
 
   private refreshAnalysis(): void {
@@ -150,11 +156,9 @@ export class ResultsComponent implements OnInit {
     this.selectedAthlete = athlete;
 
     const startsWithPts = athlete.starty.filter((s) => s.punkty !== null);
-    const uniqueComps = new Set(
-      athlete.starty.map((s) => s.timestamp_pobrania),
-    );
+    const uniqueComps = new Set(athlete.starty.map((s) => this.batchKey(s)));
     const uniqueEvents = new Set(
-      startsWithPts.map((s) => `${s.dystans} ${s.styl}`),
+      startsWithPts.map((s) => `${s.dystans} ${this.normalizeStyl(s.styl)}`),
     );
 
     this.athleteStats = {
@@ -167,8 +171,8 @@ export class ResultsComponent implements OnInit {
     };
 
     this.athleteStarts = [...athlete.starty].sort((a, b) =>
-      this.competitionDateSortKey(a.data, a.timestamp_pobrania).localeCompare(
-        this.competitionDateSortKey(b.data, b.timestamp_pobrania),
+      this.competitionDateSortKey(a.data).localeCompare(
+        this.competitionDateSortKey(b.data),
       ),
     );
 
@@ -178,40 +182,52 @@ export class ResultsComponent implements OnInit {
   }
 
   private buildProgressChart(athlete: Athlete): void {
-    // Group starts by competition batch (timestamp_pobrania)
     const compBatches = new Map<
       string,
       { zawody: string; location: string; data: string; starts: Start[] }
     >();
     for (const s of athlete.starty) {
-      if (!compBatches.has(s.timestamp_pobrania)) {
-        compBatches.set(s.timestamp_pobrania, {
-          zawody: s.zawody,
-          location: s.miejscowosc,
-          data: s.data,
-          starts: [],
-        });
+      const key = this.batchKey(s);
+      if (!compBatches.has(key)) {
+        compBatches.set(key, { zawody: s.zawody, location: s.miejscowosc, data: s.data, starts: [] });
       }
-      compBatches.get(s.timestamp_pobrania)!.starts.push(s);
+      const batch = compBatches.get(key)!;
+      if (this.competitionDateSortKey(s.data) < this.competitionDateSortKey(batch.data)) {
+        batch.data = s.data;
+      }
+      batch.starts.push(s);
     }
 
     const sortedBatches = Array.from(compBatches.entries()).sort(
-      ([tsA, bA], [tsB, bB]) =>
-        this.competitionDateSortKey(bA.data, tsA).localeCompare(
-          this.competitionDateSortKey(bB.data, tsB),
+      ([, bA], [, bB]) =>
+        this.competitionDateSortKey(bA.data).localeCompare(
+          this.competitionDateSortKey(bB.data),
         ),
     );
 
-    const xLabels = sortedBatches.map(([, g]) =>
+    // Detect duplicate short names to append month/year suffix
+    const shortNames = sortedBatches.map(([, g]) =>
       g.zawody.length > 20 ? g.zawody.slice(0, 19) + '…' : g.zawody,
     );
+    const nameCounts = shortNames.reduce<Record<string, number>>((acc, n) => {
+      acc[n] = (acc[n] ?? 0) + 1;
+      return acc;
+    }, {});
+    const xLabels = sortedBatches.map(([, g], i) => {
+      const name = shortNames[i];
+      if (nameCounts[name] > 1) {
+        const parts = g.data.split('/');
+        const suffix = parts.length === 3 ? ` (${parts[1]}/${parts[2].slice(2)})` : '';
+        return name + suffix;
+      }
+      return name;
+    });
 
-    // All unique events with at least one point
     const allEvents = Array.from(
       new Set(
         athlete.starty
           .filter((s) => s.punkty !== null)
-          .map((s) => `${s.dystans} ${s.styl}`),
+          .map((s) => `${s.dystans} ${this.normalizeStyl(s.styl)}`),
       ),
     );
 
@@ -219,7 +235,9 @@ export class ResultsComponent implements OnInit {
       .map((event, idx) => {
         const data = sortedBatches.map(([, group]) => {
           const match = group.starts.find(
-            (s) => `${s.dystans} ${s.styl}` === event && s.punkty !== null,
+            (s) =>
+              `${s.dystans} ${this.normalizeStyl(s.styl)}` === event &&
+              s.punkty !== null,
           );
           if (!match) return null;
           return {
@@ -247,8 +265,6 @@ export class ResultsComponent implements OnInit {
       .filter((s) => s !== null);
 
     const formatTime = (t: string) => this.formatTime(t);
-    const formatDate = (d: string, ts: string) =>
-      d ? this.formatDate(d) : this.tsToDate(ts);
 
     this.progressChartOptions = {
       backgroundColor: 'transparent',
@@ -258,9 +274,9 @@ export class ResultsComponent implements OnInit {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         formatter: (params: any[]) => {
           const idx = params[0]?.dataIndex;
-          const [ts, batch] = sortedBatches[idx] ?? [];
+          const batch = sortedBatches[idx]?.[1];
           if (!batch) return '';
-          const heading = `${batch.zawody}, ${batch.location} <span style="color:#666">(${formatDate(batch.data, ts)})</span>`;
+          const heading = `${batch.zawody}, ${batch.location} <span style="color:#666">(${this.formatDate(batch.data)})</span>`;
           let rows = '';
           for (const p of params) {
             if (p.data === null || p.data === undefined) continue;
@@ -316,7 +332,7 @@ export class ResultsComponent implements OnInit {
     const bestPerEvent: Record<string, { points: number; czas: string }> = {};
     for (const s of athlete.starty) {
       if (s.punkty === null) continue;
-      const key = `${s.dystans} ${s.styl} (${s.basen})`;
+      const key = `${s.dystans} ${this.normalizeStyl(s.styl)} (${s.basen})`;
       if (!bestPerEvent[key] || s.punkty > bestPerEvent[key].points) {
         bestPerEvent[key] = { points: s.punkty, czas: s.czas };
       }
@@ -410,7 +426,8 @@ export class ResultsComponent implements OnInit {
 
     const styleCounts: Record<string, number> = {};
     for (const s of athlete.starty) {
-      styleCounts[s.styl] = (styleCounts[s.styl] ?? 0) + 1;
+      const styl = this.normalizeStyl(s.styl);
+      styleCounts[styl] = (styleCounts[styl] ?? 0) + 1;
     }
 
     const data = Object.entries(styleCounts).map(([styl, count]) => ({

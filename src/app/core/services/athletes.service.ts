@@ -22,7 +22,7 @@ export interface Start {
 export interface Athlete {
   imie: string;
   nazwisko: string;
-  rok_urodzenia: number;
+  rok_urodzenia: number | null;
   klub: string;
   starty: Start[];
 }
@@ -33,7 +33,7 @@ export interface AthletesData {
 
 export interface LastCompetitionResult {
   zawodnik: string;
-  rok_urodzenia: number;
+  rok_urodzenia: number | null;
   zawody: string;
   data: string;
   miejscowosc: string;
@@ -46,7 +46,7 @@ export interface LastCompetitionResult {
 
 export interface BestResult {
   zawodnik: string;
-  rok_urodzenia: number;
+  rok_urodzenia: number | null;
   zawody: string;
   miejscowosc: string;
   dystans: string;
@@ -58,7 +58,7 @@ export interface BestResult {
 
 export interface StartWithAthlete {
   athlete: string;
-  rok_urodzenia: number;
+  rok_urodzenia: number | null;
   start: Start;
 }
 

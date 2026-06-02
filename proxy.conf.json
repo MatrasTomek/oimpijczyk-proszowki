@@ -1,7 +1,7 @@
 {
-  "/api": {
-    "target": "http://localhost:8080",
-    "secure": false,
+  "/backend": {
+    "target": "https://olimpijczyk-proszowki.pl",
+    "secure": true,
     "changeOrigin": true
   }
 }
