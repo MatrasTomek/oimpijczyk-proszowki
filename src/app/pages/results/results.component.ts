@@ -189,10 +189,18 @@ export class ResultsComponent implements OnInit {
     for (const s of athlete.starty) {
       const key = this.batchKey(s);
       if (!compBatches.has(key)) {
-        compBatches.set(key, { zawody: s.zawody, location: s.miejscowosc, data: s.data, starts: [] });
+        compBatches.set(key, {
+          zawody: s.zawody,
+          location: s.miejscowosc,
+          data: s.data,
+          starts: [],
+        });
       }
       const batch = compBatches.get(key)!;
-      if (this.competitionDateSortKey(s.data) < this.competitionDateSortKey(batch.data)) {
+      if (
+        this.competitionDateSortKey(s.data) <
+        this.competitionDateSortKey(batch.data)
+      ) {
         batch.data = s.data;
       }
       batch.starts.push(s);
@@ -217,7 +225,8 @@ export class ResultsComponent implements OnInit {
       const name = shortNames[i];
       if (nameCounts[name] > 1) {
         const parts = g.data.split('/');
-        const suffix = parts.length === 3 ? ` (${parts[1]}/${parts[2].slice(2)})` : '';
+        const suffix =
+          parts.length === 3 ? ` (${parts[1]}/${parts[2].slice(2)})` : '';
         return name + suffix;
       }
       return name;
@@ -295,16 +304,22 @@ export class ResultsComponent implements OnInit {
         },
       },
       legend: {
+        type: 'scroll',
         bottom: 0,
         textStyle: AXIS_LABEL_BASE,
         icon: 'circle',
         itemWidth: 10,
         itemHeight: 10,
+        pageIconSize: 10,
+        pageTextStyle: { color: '#666', fontSize: 10 },
       },
       grid: {
         left: '2%',
         right: '2%',
-        bottom: '18%',
+        bottom:
+          window.innerWidth < 768
+            ? `${Math.min(45, 18 + allEvents.length * 3)}%`
+            : '18%',
         top: '8%',
         containLabel: true,
       },

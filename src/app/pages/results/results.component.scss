@@ -228,6 +228,10 @@
 
   &--progress {
     height: 380px;
+
+    @media (max-width: 767px) {
+      height: 480px;
+    }
   }
   &--tall {
     height: 320px;
