@@ -2,12 +2,13 @@ import { Component, signal } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { RodoBannerComponent } from './shared/rodo-banner/rodo-banner.component';
 import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, RodoBannerComponent],
   template: `
     @if (!isAdminRoute()) {
       <app-header />
@@ -17,6 +18,7 @@ import { filter } from 'rxjs/operators';
     </main>
     @if (!isAdminRoute()) {
       <app-footer />
+      <app-rodo-banner />
     }
   `,
   styles: [`

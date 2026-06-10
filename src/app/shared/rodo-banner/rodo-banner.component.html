@@ -1,0 +1,17 @@
+@if (visible()) {
+  <div class="rodo-banner" role="complementary" aria-label="Informacja o prywatności">
+    <div class="rodo-banner__icon">
+      <i class="pi pi-shield"></i>
+    </div>
+    <div class="rodo-banner__body">
+      <p class="rodo-banner__title">Prywatność i cookies</p>
+      <p class="rodo-banner__text">
+        Ta strona używa plików cookies. Korzystając z niej, akceptujesz naszą
+        <a routerLink="/rodo" class="rodo-banner__link" (click)="dismiss()">politykę prywatności</a>.
+      </p>
+    </div>
+    <button class="rodo-banner__close" (click)="dismiss()" aria-label="Zamknij">
+      <i class="pi pi-times"></i>
+    </button>
+  </div>
+}
