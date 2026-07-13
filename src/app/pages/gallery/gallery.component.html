@@ -24,10 +24,21 @@
     <div class="gallery-grid">
       <div
         class="gallery-item"
+        #galleryItem
         *ngFor="let item of filteredItems; let i = index"
         (click)="openLightbox(i)"
       >
-        <img [src]="galleryService.imageUrl(item.filename)" [alt]="item.title ?? item.filename" loading="lazy" class="gallery-img" />
+        <div class="img-spinner">
+          <i class="pi pi-spin pi-spinner"></i>
+        </div>
+        <img
+          [src]="galleryService.thumbnailUrl(item.filename)"
+          [alt]="item.title ?? item.filename"
+          loading="lazy"
+          class="gallery-img"
+          (load)="galleryItem.classList.add('img-loaded')"
+          (error)="galleryItem.classList.add('img-loaded'); $any($event.target).src = galleryService.imageUrl(item.filename)"
+        />
         <div class="gallery-overlay">
           <p class="gallery-title">{{ item.title ?? item.filename }}</p>
           <p-tag [value]="item.category" severity="warn" />

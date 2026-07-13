@@ -37,7 +37,7 @@ export class GalleryComponent implements OnInit {
   get lightboxImages() {
     return this.filteredItems.map(i => ({
       itemImageSrc: this.galleryService.imageUrl(i.filename),
-      thumbnailImageSrc: this.galleryService.imageUrl(i.filename),
+      thumbnailImageSrc: this.galleryService.thumbnailUrl(i.filename),
       alt: i.title ?? i.filename,
       title: i.title ?? '',
     }));

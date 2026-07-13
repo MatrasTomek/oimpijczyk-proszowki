@@ -27,6 +27,10 @@ export class GalleryService {
     return `${environment.apiUrl}/uploads/gallery/${filename}`;
   }
 
+  thumbnailUrl(filename: string): string {
+    return `${environment.apiUrl}/uploads/gallery/thumbs/${filename}`;
+  }
+
   upload(file: File, title: string, category: string): Observable<{ id: number; filename: string }> {
     const fd = new FormData();
     fd.append('file', file);
