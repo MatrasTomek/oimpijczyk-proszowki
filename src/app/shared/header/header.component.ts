@@ -25,6 +25,7 @@ export class HeaderComponent {
     { label: 'Obozy szkoleniowe', path: '/obozy' },
     { label: 'Wyniki zawodników', path: '/wyniki' },
     { label: 'Galeria', path: '/galeria' },
+    { label: 'Sekcja B - zapisy', path: '/sekcjab' },
   ];
 
   @HostListener('window:scroll')

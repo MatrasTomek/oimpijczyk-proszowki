@@ -1,0 +1,134 @@
+<div class="page-hero">
+  <div class="container">
+    <h1 class="page-title">Zapisz dziecko do Sekcji B</h1>
+    <p class="page-breadcrumb">Start / Zapisz dziecko do Sekcji B</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    @if (!submitted()) {
+      <h2 class="form-title">
+        Formularz zgłoszenia dziecka do sekcji B klubu Olimpijczyk Proszówki
+      </h2>
+
+      <form class="sekcjab-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="imieDziecka">Imię dziecka *</label>
+            <input pInputText type="text" id="imieDziecka" formControlName="imieDziecka" />
+            @if (form.get('imieDziecka')?.invalid && form.get('imieDziecka')?.touched) {
+              <p class="field-error">Podaj imię dziecka (min. 3 znaki).</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="nazwiskoDziecka">Nazwisko dziecka *</label>
+            <input pInputText type="text" id="nazwiskoDziecka" formControlName="nazwiskoDziecka" />
+            @if (form.get('nazwiskoDziecka')?.invalid && form.get('nazwiskoDziecka')?.touched) {
+              <p class="field-error">Podaj nazwisko dziecka (min. 3 znaki).</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="wiekDziecka">Wiek dziecka *</label>
+            <p-inputNumber
+              inputId="wiekDziecka"
+              formControlName="wiekDziecka"
+              [showButtons]="false"
+              [min]="1"
+              [max]="99"
+              [useGrouping]="false"
+            />
+            @if (form.get('wiekDziecka')?.invalid && form.get('wiekDziecka')?.touched) {
+              <p class="field-error">Podaj wiek dziecka.</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="stylePlywackie">Style pływackie dziecka *</label>
+            <p-multiSelect
+              inputId="stylePlywackie"
+              formControlName="stylePlywackie"
+              [options]="styleOptions"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Wybierz style pływackie"
+              display="chip"
+            />
+            @if (form.get('stylePlywackie')?.invalid && form.get('stylePlywackie')?.touched) {
+              <p class="field-error">Wybierz przynajmniej jeden styl pływacki.</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="imieOpiekuna">Imię opiekuna *</label>
+            <input pInputText type="text" id="imieOpiekuna" formControlName="imieOpiekuna" />
+            @if (form.get('imieOpiekuna')?.invalid && form.get('imieOpiekuna')?.touched) {
+              <p class="field-error">Podaj imię opiekuna (min. 3 znaki).</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="nazwiskoOpiekuna">Nazwisko opiekuna *</label>
+            <input pInputText type="text" id="nazwiskoOpiekuna" formControlName="nazwiskoOpiekuna" />
+            @if (form.get('nazwiskoOpiekuna')?.invalid && form.get('nazwiskoOpiekuna')?.touched) {
+              <p class="field-error">Podaj nazwisko opiekuna (min. 3 znaki).</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="telefon">Telefon kontaktowy *</label>
+            <input pInputText type="text" id="telefon" formControlName="telefon" />
+            @if (form.get('telefon')?.invalid && form.get('telefon')?.touched) {
+              <p class="field-error">Podaj telefon kontaktowy (min. 9 znaków).</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="email">Mail *</label>
+            <input pInputText type="text" id="email" formControlName="email" />
+            @if (form.get('email')?.invalid && form.get('email')?.touched) {
+              <p class="field-error">Podaj poprawny adres e-mail.</p>
+            }
+          </div>
+
+          <div class="form-field form-field-wide">
+            <label for="uwagi">Uwagi/pytanie</label>
+            <textarea pTextarea id="uwagi" formControlName="uwagi" rows="4"></textarea>
+          </div>
+
+          <div class="form-field form-field-wide form-field-checkbox">
+            <p-checkbox formControlName="rodo" [binary]="true" inputId="rodo" />
+            <label for="rodo">
+              Akceptuję
+              <a routerLink="/rodo">Politykę prywatności</a>
+              *
+            </label>
+          </div>
+          @if (form.get('rodo')?.invalid && form.get('rodo')?.touched) {
+            <p class="field-error form-field-wide">Musisz zaakceptować Politykę prywatności.</p>
+          }
+        </div>
+
+        @if (errorMsg()) {
+          <p-message severity="error" [text]="errorMsg() ?? ''" />
+        }
+
+        <footer class="form-footer">
+          <p-button
+            type="submit"
+            label="Wyślij"
+            [disabled]="form.invalid || submitting()"
+            [loading]="submitting()"
+          />
+        </footer>
+      </form>
+    } @else {
+      <p-message
+        severity="success"
+        text="Dziękujemy! Twoje zgłoszenie zostało wysłane – skontaktujemy się w sprawie zapisów."
+      />
+    }
+  </div>
+</section>

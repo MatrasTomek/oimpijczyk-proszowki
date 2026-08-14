@@ -19,6 +19,7 @@ export class FooterComponent {
     { label: 'Obozy szkoleniowe', path: '/obozy' },
     { label: 'Wyniki zawodników', path: '/wyniki' },
     { label: 'Galeria', path: '/galeria' },
+    { label: 'Zapisz dziecko do Sekcji B', path: '/sekcjab' },
     { label: 'Polityka prywatności', path: '/rodo' },
   ];
 }
